@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "324540492115",
+    "project_id": "chimay-house",
+    "storage_bucket": "chimay-house.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:324540492115:android:8e9ed0af99c07177ef19a6",
+        "android_client_info": {
+          "package_name": "com.example.chimay_house"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCz2ONDsb7cm_09zxTToEYbo2PdooJrIBc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

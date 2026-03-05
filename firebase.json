@@ -1,0 +1,38 @@
+{
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "chimay-house",
+          "appId": "1:324540492115:android:8e9ed0af99c07177ef19a6",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "chimay-house",
+          "configurations": {
+            "android": "1:324540492115:android:8e9ed0af99c07177ef19a6",
+            "ios": "1:324540492115:ios:d46a4765f7958012ef19a6",
+            "macos": "1:324540492115:ios:d46a4765f7958012ef19a6",
+            "web": "1:324540492115:web:7836875b49a251f8ef19a6",
+            "windows": "1:324540492115:web:90b89e07f06988b2ef19a6"
+          }
+        }
+      }
+    }
+  },
+  "functions": [
+    {
+      "source": "functions",
+      "codebase": "default",
+      "ignore": [
+        "node_modules",
+        ".git",
+        "firebase-debug.log",
+        "firebase-debug.*.log",
+        "*.local"
+      ]
+    }
+  ]
+}
