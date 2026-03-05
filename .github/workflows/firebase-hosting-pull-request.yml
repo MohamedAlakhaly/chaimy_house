@@ -25,7 +25,7 @@ jobs:
 
       # 4. بناء المشروع (مع الحلول التي ناقشناها للشاشة البيضاء والأيقونات)
       - name: Build Web
-        run: flutter build web --release --no-tree-shake-icons --web-renderer html --no-wasm-dry-run
+        run: flutter build web --release --no-tree-shake-icons --no-wasm-dry-run  
 
       # 5. الرفع إلى فايربيس
       - name: Deploy to Firebase Hosting
