@@ -11,6 +11,7 @@ import 'package:timezone/timezone.dart' as tz;
 import 'package:timezone/data/latest.dart' as tz_data;
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter_timezone/flutter_timezone.dart';
+import 'package:flutter/foundation.dart' show defaultTargetPlatform, kIsWeb;
 
 class AppServices {
   late SharedPreferences sharedPreferences;
@@ -36,16 +37,147 @@ Future initialService() async {
   print("Services Initialized ✅");
 }
 
-class NotificationService {
+// class NotificationService {
+//   static final FlutterLocalNotificationsPlugin _notificationsPlugin =
+//       FlutterLocalNotificationsPlugin();
+
+//   static Future<void> init() async {
+//     WidgetsFlutterBinding.ensureInitialized();
+
+//     tz_data.initializeTimeZones();
+
+//     tz.setLocalLocation(tz.getLocation('Europe/Brussels'));
+
+//     const AndroidInitializationSettings androidSettings =
+//         AndroidInitializationSettings('@mipmap/ic_launcher');
+
+//     const DarwinInitializationSettings iosSettings =
+//         DarwinInitializationSettings();
+
+//     const InitializationSettings settings = InitializationSettings(
+//       android: androidSettings,
+//       iOS: iosSettings,
+//     );
+
+//     await _notificationsPlugin.initialize(
+//       settings: settings,
+//       onDidReceiveNotificationResponse: (response) {
+//         String? reminderId = response.payload;
+
+//         if (reminderId != null) {
+//           // مثلا فتح صفحة التذكير في التطبيق
+//           Get.to(() => ShowAllRemindersView());
+//         }
+//       },
+//     );
+
+//     // --- خطوة حاسمة: تعريف قنوات الإشعارات لنظام أندرويد ---
+//     if (Platform.isAndroid) {
+//       final androidImplementation = _notificationsPlugin
+//           .resolvePlatformSpecificImplementation<
+//             AndroidFlutterLocalNotificationsPlugin
+//           >();
+
+//       const AndroidNotificationChannel channel = AndroidNotificationChannel(
+//         'reminder_v1', // نفس المعرف المستخدم في الجدولة
+//         'Reminders',
+//         description: 'Notifications for appointments',
+//         importance: Importance.max,
+//         playSound: true,
+//         enableVibration: true,
+//       );
+
+//       await androidImplementation?.createNotificationChannel(channel);
+//     }
+//   }
+
+//   static Future<void> scheduleNotification({
+//     required int id,
+//     required String title,
+//     required String body,
+//     required DateTime scheduledDate,
+//     required String payload,
+//   }) async {
+//     final tzDate = tz.TZDateTime.from(scheduledDate, tz.local);
+
+//     await _notificationsPlugin.zonedSchedule(
+//       id: id,
+//       title: title,
+//       body: body,
+//       scheduledDate: tzDate,
+//       payload: payload,
+//       notificationDetails: const NotificationDetails(
+//         android: AndroidNotificationDetails(
+//           'reminder_v1',
+//           'Reminders',
+//           importance: Importance.max,
+//           priority: Priority.high,
+//         ),
+//       ),
+//       androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
+//     );
+
+//     print("🔥 تمت جدولة الإشعار عند: $tzDate");
+//   }
+
+//   static Future<void> showInstantNotification() async {
+//     await _notificationsPlugin.show(
+//       id: 0,
+//       title: "اختبار فوري 🚀",
+//       body: "إذا رأيت هذا، فالمكتبة تعمل بشكل سليم",
+//       notificationDetails: const NotificationDetails(
+//         android: AndroidNotificationDetails(
+//           'reminder_v1',
+//           'Reminders',
+//           importance: Importance.max,
+//           priority: Priority.high,
+//         ),
+//       ),
+//     );
+//   }
+
+//   static Future<void> cancelNotification(int id) async {
+//     await _notificationsPlugin.cancel(id: id);
+//     print("تم إلغاء الإشعار ذو المعرف: $id");
+//   }
+
+//   static Future<void> requestPermissions() async {
+//     if (Platform.isAndroid) {
+//       final androidImplementation = _notificationsPlugin
+//           .resolvePlatformSpecificImplementation<
+//             AndroidFlutterLocalNotificationsPlugin
+//           >();
+
+//       // طلب إذن الإشعارات (لأندرويد 13 فما فوق)
+//       await androidImplementation?.requestNotificationsPermission();
+//       // طلب إذن المنبه الدقيق (لأندرويد 14 فما فوق)
+//       await androidImplementation?.requestExactAlarmsPermission();
+//     } else if (Platform.isIOS) {
+//       await _notificationsPlugin
+//           .resolvePlatformSpecificImplementation<
+//             IOSFlutterLocalNotificationsPlugin
+//           >()
+//           ?.requestPermissions(alert: true, badge: true, sound: true);
+//     }
+//   }
+
+
+
+  class NotificationService {
   static final FlutterLocalNotificationsPlugin _notificationsPlugin =
       FlutterLocalNotificationsPlugin();
 
   static Future<void> init() async {
+    if (kIsWeb) return; // حماية إضافية للويب
+
     WidgetsFlutterBinding.ensureInitialized();
-
     tz_data.initializeTimeZones();
-
-    tz.setLocalLocation(tz.getLocation('Europe/Brussels'));
+    
+    try {
+      tz.setLocalLocation(tz.getLocation('Europe/Brussels'));
+    } catch (e) {
+      log("Timezone error: $e");
+    }
 
     const AndroidInitializationSettings androidSettings =
         AndroidInitializationSettings('@mipmap/ic_launcher');
@@ -62,23 +194,20 @@ class NotificationService {
       settings: settings,
       onDidReceiveNotificationResponse: (response) {
         String? reminderId = response.payload;
-
         if (reminderId != null) {
-          // مثلا فتح صفحة التذكير في التطبيق
           Get.to(() => ShowAllRemindersView());
         }
       },
     );
 
-    // --- خطوة حاسمة: تعريف قنوات الإشعارات لنظام أندرويد ---
-    if (Platform.isAndroid) {
+    // تعديل السطر 74: استخدام defaultTargetPlatform بدلاً من Platform
+    if (!kIsWeb && defaultTargetPlatform == TargetPlatform.android) {
       final androidImplementation = _notificationsPlugin
           .resolvePlatformSpecificImplementation<
-            AndroidFlutterLocalNotificationsPlugin
-          >();
+              AndroidFlutterLocalNotificationsPlugin>();
 
       const AndroidNotificationChannel channel = AndroidNotificationChannel(
-        'reminder_v1', // نفس المعرف المستخدم في الجدولة
+        'reminder_v1',
         'Reminders',
         description: 'Notifications for appointments',
         importance: Importance.max,
@@ -97,6 +226,8 @@ class NotificationService {
     required DateTime scheduledDate,
     required String payload,
   }) async {
+    if (kIsWeb) return; // الإشعارات المجدولة لا تعمل في ويب فلاتر بهذه المكتبة
+
     final tzDate = tz.TZDateTime.from(scheduledDate, tz.local);
 
     await _notificationsPlugin.zonedSchedule(
@@ -115,10 +246,25 @@ class NotificationService {
       ),
       androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
     );
-
-    print("🔥 تمت جدولة الإشعار عند: $tzDate");
   }
 
+  static Future<void> requestPermissions() async {
+    if (kIsWeb) return;
+
+    if (defaultTargetPlatform == TargetPlatform.android) {
+      final androidImplementation = _notificationsPlugin
+          .resolvePlatformSpecificImplementation<
+              AndroidFlutterLocalNotificationsPlugin>();
+
+      await androidImplementation?.requestNotificationsPermission();
+      await androidImplementation?.requestExactAlarmsPermission();
+    } else if (defaultTargetPlatform == TargetPlatform.iOS) {
+      await _notificationsPlugin
+          .resolvePlatformSpecificImplementation<
+              IOSFlutterLocalNotificationsPlugin>()
+          ?.requestPermissions(alert: true, badge: true, sound: true);
+    }
+  }
   static Future<void> showInstantNotification() async {
     await _notificationsPlugin.show(
       id: 0,
@@ -139,27 +285,9 @@ class NotificationService {
     await _notificationsPlugin.cancel(id: id);
     print("تم إلغاء الإشعار ذو المعرف: $id");
   }
-
-  static Future<void> requestPermissions() async {
-    if (Platform.isAndroid) {
-      final androidImplementation = _notificationsPlugin
-          .resolvePlatformSpecificImplementation<
-            AndroidFlutterLocalNotificationsPlugin
-          >();
-
-      // طلب إذن الإشعارات (لأندرويد 13 فما فوق)
-      await androidImplementation?.requestNotificationsPermission();
-      // طلب إذن المنبه الدقيق (لأندرويد 14 فما فوق)
-      await androidImplementation?.requestExactAlarmsPermission();
-    } else if (Platform.isIOS) {
-      await _notificationsPlugin
-          .resolvePlatformSpecificImplementation<
-            IOSFlutterLocalNotificationsPlugin
-          >()
-          ?.requestPermissions(alert: true, badge: true, sound: true);
-    }
-  }
+  
 }
+
 
 class AdminService {
   static Future<void> deleteUser(String uid) async {

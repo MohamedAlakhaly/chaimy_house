@@ -71,6 +71,7 @@ class _MyAppState extends State<MyApp> {
         services.sharedPreferences.getString('langCode') ??
         Get.deviceLocale?.languageCode ??
         'en';
+    // log(langCode);
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       initialRoute: AppRoutes.splash,
