@@ -131,7 +131,7 @@ flutter:
     # //! waiting for activation 
     - assets/images/auth/waiting_for_activation/
     - assets/images/flags/
-    - assets/images/on_boarding/
+    # - assets/images/on_boarding/
     - assets/images/onBoarding/
     - assets/images/category/
     - assets/images/category/stop_and_think/
