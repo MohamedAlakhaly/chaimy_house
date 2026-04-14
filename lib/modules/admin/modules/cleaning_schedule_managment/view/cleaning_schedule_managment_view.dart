@@ -5,6 +5,7 @@ import 'package:chimay_house/core/constant/app_images.dart';
 import 'package:chimay_house/core/constant/app_text_style.dart';
 import 'package:chimay_house/core/functions/helper_functions.dart';
 import 'package:chimay_house/core/functions/input_validation.dart';
+import 'package:chimay_house/core/functions/responsive.dart';
 import 'package:chimay_house/core/services/app_services.dart';
 import 'package:chimay_house/global/custom_button_with_blur_background.dart';
 import 'package:chimay_house/global/custom_button_with_shadow.dart';
@@ -22,13 +23,14 @@ import 'package:intl/intl.dart';
 import 'package:lottie/lottie.dart';
 import 'package:quickalert/quickalert.dart';
 
-class CleaningScheduleManagmentView
-    extends GetView<CleaningScheduleManagmentControllerImp> {
-  const CleaningScheduleManagmentView({super.key});
+class CleaningScheduleManagementView
+    extends GetView<CleaningScheduleManagementControllerImp> {
+  const CleaningScheduleManagementView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    Get.lazyPut(() => CleaningScheduleManagmentControllerImp(), fenix: true);
+    bool isDesktop = Responsive.isDesktop(context);
+    Get.lazyPut(() => CleaningScheduleManagementControllerImp(), fenix: true);
 
     void showInputDialog() {
       showDialog(
@@ -354,11 +356,11 @@ class CleaningScheduleManagmentView
                 ).animate().fadeIn(delay: 600.ms, duration: 600.ms)
               else
                 GridView.builder(
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount:isDesktop? 2:1,
                     crossAxisSpacing: 10,
                     mainAxisSpacing: 10,
-                    mainAxisExtent: 190,
+                    mainAxisExtent: 230,
                   ),
                   itemCount: snapshot.data!.docs.length,
                   shrinkWrap: true,
@@ -400,11 +402,18 @@ class CustomCleaningScheduleCard extends StatelessWidget {
   });
 
   final CleaningScheduleModel cleaningScheduleData;
-  final CleaningScheduleManagmentControllerImp controller;
+  final CleaningScheduleManagementControllerImp controller;
 
   @override
   Widget build(BuildContext context) {
     AppServices services = Get.find();
+
+    DateTime now = DateTime.now();
+    DateTime endDateTime = cleaningScheduleData.endDate.toDate();
+    bool isExpired = now.isAfter(endDateTime); 
+    // --------------------------------------------------
+
+    Color activeColor = isExpired ? Colors.grey.shade800 : AppColors.primary;
 
     String formatFirestoreTimestampOnlyMonth(Timestamp timestamp) {
       DateTime dateTime = timestamp.toDate().add(const Duration(hours: 3));
@@ -422,16 +431,16 @@ class CustomCleaningScheduleCard extends StatelessWidget {
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [
-            AppColors.primary.withValues(alpha: 0.1),
-            AppColors.primary.withValues(alpha: 0.05),
+            activeColor.withValues(alpha: 0.1),
+            activeColor.withValues(alpha: 0.05),
           ],
         ),
         color: (isDarkMode ? Colors.grey.shade900 : Colors.white),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AppColors.primary, width: 2),
+        border: Border.all(color: activeColor, width: 2),
         boxShadow: [
           BoxShadow(
-            color: AppColors.primary.withValues(alpha: 0.2),
+            color: activeColor.withValues(alpha: 0.2),
             blurRadius: 15,
             offset: const Offset(0, 2),
           ),
@@ -448,12 +457,12 @@ class CustomCleaningScheduleCard extends StatelessWidget {
                   Container(
                     padding: const EdgeInsets.all(10),
                     decoration: BoxDecoration(
-                      color: AppColors.primary.withValues(alpha: 0.1),
+                      color: activeColor.withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(12),
                     ),
-                    child: const Icon(
+                    child:  Icon(
                       Icons.cleaning_services_rounded,
-                      color: AppColors.primary,
+                      color: activeColor,
                       size: 24,
                     ),
                   ),
@@ -493,14 +502,14 @@ class CustomCleaningScheduleCard extends StatelessWidget {
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
                         colors: [
-                          AppColors.primary,
-                          AppColors.primary.withValues(alpha: 0.8),
+                          activeColor,
+                          activeColor.withValues(alpha: 0.8),
                         ],
                       ),
                       borderRadius: BorderRadius.circular(20),
                       boxShadow: [
                         BoxShadow(
-                          color: AppColors.primary.withValues(alpha: 0.3),
+                          color: activeColor.withValues(alpha: 0.3),
                           blurRadius: 8,
                           offset: const Offset(0, 2),
                         ),
@@ -680,6 +689,25 @@ class CustomCleaningScheduleCard extends StatelessWidget {
               ],
             ),
           ),
+
+          if (isExpired)
+            Container(
+              margin: const EdgeInsets.only(top: 16),
+              padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 4),
+              decoration: BoxDecoration(
+                color: Colors.red.withValues(alpha: 0.2),
+                border: Border.all(color: Colors.red),
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: Text(
+                'Expiré',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            )
+
+            
         ],
       ),
     );

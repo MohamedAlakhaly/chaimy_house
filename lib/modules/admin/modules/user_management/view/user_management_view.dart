@@ -645,11 +645,12 @@ class CustomManageUserDate extends StatelessWidget {
                           vertical: 10,
                         ),
                         decoration: BoxDecoration(
-                          color: Colors.white.withValues(alpha: 0.2),
                           borderRadius: BorderRadius.circular(20),
+                          color: isDarkMode
+                              ? Colors.white.withValues(alpha: 0.09)
+                              : Colors.grey[100],
                           border: Border.all(
-                            color: Colors.white.withValues(alpha: 0.3),
-                            width: 1,
+                            color: Colors.grey.withValues(alpha: 0.2),
                           ),
                         ),
                         child: Row(
@@ -657,7 +658,7 @@ class CustomManageUserDate extends StatelessWidget {
                           children: [
                             Icon(
                               Iconsax.calendar,
-                              color: Colors.white,
+                              color: AppColors.primary,
                               size: 18,
                             ),
                             const SizedBox(width: 8),
@@ -683,17 +684,18 @@ class CustomManageUserDate extends StatelessWidget {
                           vertical: 10,
                         ),
                         decoration: BoxDecoration(
-                          color: Colors.white.withValues(alpha: 0.2),
                           borderRadius: BorderRadius.circular(20),
+                          color: isDarkMode
+                              ? Colors.white.withValues(alpha: 0.09)
+                              : Colors.grey[100],
                           border: Border.all(
-                            color: Colors.white.withValues(alpha: 0.3),
-                            width: 1,
+                            color: Colors.grey.withValues(alpha: 0.2),
                           ),
                         ),
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            Icon(Iconsax.home, color: Colors.white, size: 18),
+                            Icon(Iconsax.home, color: AppColors.primary, size: 18),
                             const SizedBox(width: 8),
                             Text(
                               'Chambre: ${userModel.roomNumber}',

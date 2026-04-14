@@ -2,12 +2,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-abstract class CleaningScheduleManagmentController extends GetxController {
-  deleteOneOfCleaningSchedule(String id);
+abstract class CleaningScheduleManagementController extends GetxController {
+  void deleteOneOfCleaningSchedule(String id);
 }
 
-class CleaningScheduleManagmentControllerImp
-    extends CleaningScheduleManagmentController {
+class CleaningScheduleManagementControllerImp
+    extends CleaningScheduleManagementController {
   @override
   deleteOneOfCleaningSchedule(String id) async {
     await FirebaseFirestore.instance

@@ -90,7 +90,7 @@ class EventManagementView extends GetView<EventsManagementControllerImp> {
                                   'Organisez et gérez tous les événements.',
                                   style: TextStyle(
                                     fontSize: 13,
-                                    color: Colors.white.withOpacity(0.7),
+                                    color: Colors.white.withValues(alpha:0.7),
                                   ),
                                 ),
                               ],
@@ -939,9 +939,8 @@ class CustomEventManagementCard extends StatelessWidget {
                             vertical: 6,
                           ),
                           decoration: BoxDecoration(
-                            color: isDarkMode
-                                ? Colors.grey[800]
-                                : Colors.grey[200],
+                            color: isDarkMode ? Colors.white.withValues(alpha: 0.05) : Colors.grey[100],
+        border: Border.all(color: Colors.grey.withValues(alpha:0.2)),
                             borderRadius: BorderRadius.circular(20),
                           ),
                           child: Row(
@@ -949,7 +948,7 @@ class CustomEventManagementCard extends StatelessWidget {
                             children: [
                               Icon(
                                 Iconsax.clock,
-                                color: Colors.grey[isDarkMode ? 400 : 600],
+                                color: AppColors.primary,
                                 size: 16,
                               ),
                               const SizedBox(width: 6),
@@ -979,9 +978,8 @@ class CustomEventManagementCard extends StatelessWidget {
                             vertical: 6,
                           ),
                           decoration: BoxDecoration(
-                            color: isDarkMode
-                                ? Colors.grey[800]
-                                : Colors.grey[200],
+                            color: isDarkMode ? Colors.white.withValues(alpha: 0.05) : Colors.grey[100],
+        border: Border.all(color: Colors.grey.withValues(alpha:0.2)),
                             borderRadius: BorderRadius.circular(20),
                           ),
                           child: Row(
@@ -989,7 +987,7 @@ class CustomEventManagementCard extends StatelessWidget {
                             children: [
                               Icon(
                                 Iconsax.location,
-                                color: Colors.grey[isDarkMode ? 400 : 600],
+                                color: AppColors.primary,
                                 size: 16,
                               ),
                               const SizedBox(width: 6),
@@ -1096,236 +1094,176 @@ class CustomShowEventMembersCard extends StatelessWidget {
   Widget build(BuildContext context) {
     bool isDarkMode = HelperFunctions.isDarkMode(context);
     return Container(
-      padding: EdgeInsets.all(10),
+      margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+      padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: Colors.grey[isDarkMode ? 900 : 300],
-        border: Border.all(color: AppColors.primary.withValues(alpha:0.3)),
-        borderRadius: BorderRadius.circular(12),
+        color: isDarkMode ? Colors.white.withValues(alpha: 0.05) : Colors.grey[100],
+        border: Border.all(color: AppColors.primary.withValues(alpha: 0.3)),
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          if (!isDarkMode)
+            BoxShadow(
+              color: Colors.black.withValues(alpha:0.05),
+              blurRadius: 10,
+              offset: const Offset(0, 4),
+            ),
+        ],
       ),
-      child:
-          Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      CircleAvatar(
-                            radius: 24,
-                            backgroundColor: userModel.isActive == true
-                                ? AppColors.primary.withValues(alpha: 0.8)
-                                : Colors.red.shade900,
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(50),
-                              child: userModel.imageUrl == ''
-                                  ? SvgPicture.asset(
-                                      AppImages.avatar,
-                                      width: 48,
-                                      height: 48,
-                                    )
-                                  : Image.network(
-                                      userModel.imageUrl,
-                                      width: 48,
-                                      height: 48,
-                                      fit: BoxFit.cover,
-
-                                      loadingBuilder:
-                                          (context, child, progress) {
-                                            if (progress == null) return child;
-                                            return const Center(
-                                              child: CircularProgressIndicator(
-                                                strokeWidth: 2,
-                                                color: AppColors.primary,
-                                              ),
-                                            );
-                                          },
-                                      errorBuilder:
-                                          (context, error, stackTrace) {
-                                            log(error.toString());
-                                            return SvgPicture.asset(
-                                              AppImages.avatar,
-                                            );
-                                          },
-                                    ),
-                            ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // الجزء العلوي: الصورة والبيانات الأساسية
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              // 1. الصورة الشخصية
+              Hero(
+                tag: userModel.id,
+                child: CircleAvatar(
+                  radius: 28,
+                  backgroundColor: userModel.isActive
+                      ? AppColors.primary.withValues(alpha: 0.8)
+                      : Colors.red.shade900,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(50),
+                    child: userModel.imageUrl.isEmpty
+                        ? SvgPicture.asset(
+                            AppImages.avatar,
+                            width: 56,
+                            height: 56,
                           )
-                          .animate()
-                          .fadeIn(delay: 300.ms, duration: 400.ms)
-                          .slideY(begin: 0.2, duration: 400.ms),
-
-                      SizedBox(width: 20),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: [
-                                Text(
-                                      userModel.username,
-                                      style: TextStyle(
-                                        color: isDarkMode
-                                            ? Colors.white
-                                            : Colors.black,
-                                        fontSize: AppFontsSize.smallFontSize,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    )
-                                    .animate()
-                                    .fadeIn(delay: 400.ms, duration: 400.ms)
-                                    .slideY(begin: 0.2, duration: 400.ms),
-                                if (!userModel.isActive)
-                                  Container(
-                                    margin: EdgeInsets.symmetric(
-                                      horizontal: 10,
-                                    ),
-                                    padding: EdgeInsets.symmetric(
-                                      horizontal: 30,
-                                      vertical: 4,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      color: Colors.red.withValues(alpha: 0.2),
-                                      borderRadius: BorderRadius.circular(50),
-                                      border: Border.all(color: Colors.red),
-                                    ),
-                                    child: Text(
-                                      'Inactif',
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ),
-
-                                if (userModel.isActive)
-                                  Container(
-                                    margin: EdgeInsets.symmetric(
-                                      horizontal: 10,
-                                    ),
-                                    padding: EdgeInsets.symmetric(
-                                      horizontal: 30,
-                                      vertical: 4,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      color: AppColors.primary.withValues(
-                                        alpha: 0.2,
-                                      ),
-                                      borderRadius: BorderRadius.circular(50),
-                                      border: Border.all(
-                                        color: AppColors.primary,
-                                      ),
-                                    ),
-                                    child: Text(
-                                      'Actif',
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ),
-                              ],
-                            ),
-                            SizedBox(height: 10),
-                            Text(
-                                  userModel.email,
-                                  style: TextStyle(
-                                    color: isDarkMode
-                                        ? Colors.grey[300]
-                                        : Colors.grey[700],
-                                    fontSize: AppFontsSize.extraSmallFontSize,
-                                  ),
-                                )
-                                .animate()
-                                .fadeIn(delay: 500.ms, duration: 400.ms)
-                                .slideY(begin: 0.2, duration: 400.ms),
-                          ],
-                        ),
-                      ),
-
-                      SizedBox(height: 10),
-                      Wrap(
-                        spacing: 10,
-                        runSpacing: 10,
-                        children: [
-                          Container(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 16,
-                                  vertical: 10,
-                                ),
-                                decoration: BoxDecoration(
-                                  color: Colors.white.withValues(alpha: 0.2),
-                                  borderRadius: BorderRadius.circular(20),
-                                  border: Border.all(
-                                    color: Colors.white.withValues(alpha: 0.3),
-                                    width: 1,
-                                  ),
-                                ),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Icon(
-                                      Iconsax.calendar,
-                                      color: Colors.white,
-                                      size: 18,
-                                    ),
-                                    const SizedBox(width: 8),
-                                    Text(
-                                      HelperFunctions()
-                                          .formatFirestoreTimestamp(
-                                            userModel.createdAt,
-                                          ),
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 13,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              )
-                              .animate()
-                              .fadeIn(delay: 600.ms, duration: 400.ms)
-                              .slideY(begin: 0.2, duration: 400.ms),
-                          Container(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 16,
-                                  vertical: 10,
-                                ),
-                                decoration: BoxDecoration(
-                                  color: Colors.white.withValues(alpha: 0.2),
-                                  borderRadius: BorderRadius.circular(20),
-                                  border: Border.all(
-                                    color: Colors.white.withValues(alpha: 0.3),
-                                    width: 1,
-                                  ),
-                                ),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Icon(
-                                      Iconsax.home,
-                                      color: Colors.white,
-                                      size: 18,
-                                    ),
-                                    const SizedBox(width: 8),
-                                    Text(
-                                      'Chambre: ${userModel.roomNumber}',
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 13,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              )
-                              .animate()
-                              .fadeIn(delay: 700.ms, duration: 400.ms)
-                              .slideY(begin: 0.2, duration: 400.ms),
-                        ],
-                      ),
-                    ],
+                        : Image.network(
+                            userModel.imageUrl,
+                            width: 56,
+                            height: 56,
+                            fit: BoxFit.cover,
+                            errorBuilder: (context, error, stackTrace) =>
+                                SvgPicture.asset(AppImages.avatar),
+                          ),
                   ),
-                ],
-              )
-              .animate()
-              .fadeIn(delay: 200.ms, duration: 400.ms)
-              .slideY(begin: 0.2, duration: 400.ms),
+                ),
+              ).animate().fadeIn().scale(),
+
+              const SizedBox(width: 15),
+
+              // 2. الاسم والايميل (استخدام Expanded هنا ضروري لمنع الـ Overflow)
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Flexible(
+                          child: Text(
+                            userModel.username,
+                            style: TextStyle(
+                              color: isDarkMode ? Colors.white : Colors.black,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        _buildStatusBadge(userModel.isActive),
+                      ],
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      userModel.email,
+                      style: TextStyle(
+                        color: isDarkMode ? Colors.grey[400] : Colors.grey[600],
+                        fontSize: 12,
+                      ),
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+
+          const SizedBox(height: 16),
+
+          // 3. التاجات (التاريخ ورقم الغرفة) - نضعها خارج الـ Row العلوي
+          Wrap(
+            spacing: 8,
+            runSpacing: 8,
+            children: [
+              _buildInfoTag(
+                icon: Iconsax.calendar,
+                label: HelperFunctions().formatFirestoreTimestamp(
+                  userModel.createdAt,
+                ),
+                isDarkMode: isDarkMode,
+              ),
+              _buildInfoTag(
+                icon: Iconsax.home,
+                label: 'Chambre: ${userModel.roomNumber}',
+                isDarkMode: isDarkMode,
+              ),
+            ],
+          ).animate().fadeIn(delay: 400.ms),
+        ],
+      ),
+    ).animate().slideX(begin: 0.1, duration: 400.ms).fadeIn();
+  }
+
+  
+  Widget _buildInfoTag({
+    required IconData icon,
+    required String label,
+    required bool isDarkMode,
+  }) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+      decoration: BoxDecoration(
+        color: isDarkMode ? Colors.white.withValues(alpha: 0.05) : Colors.grey[100],
+        border: Border.all(color: Colors.grey.withValues(alpha:0.2)),
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(icon, size: 14, color: AppColors.primary),
+          const SizedBox(width: 6),
+          Text(
+            label,
+            style: TextStyle(
+              fontSize: 12,
+              fontWeight: FontWeight.w500,
+              color: isDarkMode ? Colors.white70 : Colors.black87,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  
+  Widget _buildStatusBadge(bool isActive) {
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 10),
+
+      padding: EdgeInsets.symmetric(horizontal: 30, vertical: 4),
+      decoration: BoxDecoration(
+        color: isActive
+            ? AppColors.primary.withValues(alpha:0.1)
+            : Colors.red.withValues(alpha:0.1),
+        borderRadius: BorderRadius.circular(50),
+        border: Border.all(
+          color: isActive ? AppColors.primary : Colors.red,
+          width: 0.5,
+        ),
+      ),
+      child: Text(
+        isActive ? 'Actif' : 'Inactif',
+        style: TextStyle(
+          color: Colors.white,
+          
+          fontWeight: FontWeight.bold,
+        ),
+      ),
     );
   }
 }

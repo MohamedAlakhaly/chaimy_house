@@ -1,3 +1,4 @@
+import 'package:chimay_house/core/functions/responsive.dart';
 import 'package:chimay_house/modules/admin/modules/account_activation/view/account_activation_view.dart';
 import 'package:chimay_house/modules/admin/modules/cleaning_schedule_managment/view/cleaning_schedule_managment_view.dart';
 import 'package:chimay_house/modules/admin/modules/events_management/view/event_management_view.dart';
@@ -13,23 +14,31 @@ class AdminView extends GetView<AdminSidebarControllerImp> {
   @override
   Widget build(BuildContext context) {
     Get.lazyPut(() => AdminSidebarControllerImp(), fenix: true);
+    bool isDesktop = Responsive.isDesktop(context);
     return Scaffold(
+      drawer: !isDesktop ? const Drawer(child: AdminSidebarWidget()) : null,
+      appBar: !isDesktop
+          ? AppBar(title: Text("Admin Panel".tr), centerTitle: true)
+          : null,
+
       body: Row(
         children: [
-          Expanded(flex: 2, child: AdminSidebarWidget()),
-          GetBuilder<AdminSidebarControllerImp>(
-            builder: (myController) {
-              return Expanded(
-                flex: 7,
-                child: controller.currentIndex == 0
-                    ? UserManagementView()
-                    : controller.currentIndex == 1
-                    ? CleaningScheduleManagmentView()
-                    : controller.currentIndex == 2
-                    ? AccountActivationView()
-                    : EventManagementView(),
-              );
-            },
+          if (isDesktop) const Expanded(flex: 2, child: AdminSidebarWidget()),
+          Expanded(
+            flex: 7,
+            child: GetBuilder<AdminSidebarControllerImp>(
+              builder: (myController) {
+                return IndexedStack(
+                  index: controller.currentIndex,
+                  children: const [
+                    UserManagementView(),
+                    CleaningScheduleManagementView(),
+                    AccountActivationView(), 
+                    EventManagementView(),
+                  ],
+                );
+              },
+            ),
           ),
         ],
       ),
