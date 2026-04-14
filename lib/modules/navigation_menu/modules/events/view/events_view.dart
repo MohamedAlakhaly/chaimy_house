@@ -2,16 +2,19 @@ import 'package:chimay_house/core/constant/app_colors.dart';
 import 'package:chimay_house/core/constant/app_images.dart';
 import 'package:chimay_house/core/constant/app_text_style.dart';
 import 'package:chimay_house/core/functions/helper_functions.dart';
+import 'package:chimay_house/core/services/app_services.dart';
 import 'package:chimay_house/global/custom_appbar.dart';
 import 'package:chimay_house/global/custom_loading_circular.dart';
 import 'package:chimay_house/models/static/events_model.dart';
 import 'package:chimay_house/modules/navigation_menu/modules/events/controller/events_controller.getx.dart';
 import 'package:chimay_house/modules/navigation_menu/modules/events/modules/event_details/view/events_details_view.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:intl/intl.dart';
 
 class EventsView extends StatelessWidget {
   const EventsView({super.key});
@@ -31,23 +34,10 @@ class EventsView extends StatelessWidget {
                 stream: controller.eventsStream,
                 builder: (context, snapshot) {
                   if (snapshot.hasError) {
-                    return Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SizedBox(width: double.infinity, height: 100),
-                        SvgPicture.asset(AppImages.errorGetData, height: 250),
-                        const SizedBox(height: 20),
-                        Text(
-                          'cleaningScheduleErrorGetDataTitle'.tr,
-                          style: AppTextStyle.titleStyle,
-                        ),
-                        const SizedBox(height: 8),
-                        Text(
-                          'cleaningScheduleErrorGetDataContent'.tr,
-                          textAlign: TextAlign.center,
-                          style: AppTextStyle.contentStyle,
-                        ),
-                      ],
+                    return CustomStreamState(
+                      title: 'cleaningScheduleErrorGetDataTitle'.tr,
+                      content: 'cleaningScheduleErrorGetDataContent'.tr,
+                      image: AppImages.errorGetData,
                     );
                   }
 
@@ -55,15 +45,23 @@ class EventsView extends StatelessWidget {
                     return CustomLoadingCircular();
                   }
 
+                  if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+                    return CustomStreamState(
+                      title: 'eventsNoEventsTitle'.tr,
+                      content: 'eventsNoEventsContent'.tr,
+                      image: AppImages.empty,
+                    );
+                  }
+
                   return ListView.separated(
                     itemCount: snapshot.data!.docs.length,
                     shrinkWrap: true,
                     physics: const BouncingScrollPhysics(),
                     itemBuilder: (context, index) {
-                      final eventsSnaphote = snapshot.data!.docs[index];
+                      final eventsSnapshot = snapshot.data!.docs[index];
                       final eventsData = EventsModel.fromMap(
-                        eventsSnaphote.data() as Map<String, dynamic>,
-                        eventsSnaphote.id,
+                        eventsSnapshot.data() as Map<String, dynamic>,
+                        eventsSnapshot.id,
                       );
                       return CustomEventsCard(eventsModel: eventsData);
                     },
@@ -80,6 +78,37 @@ class EventsView extends StatelessWidget {
   }
 }
 
+class CustomStreamState extends StatelessWidget {
+  final String title;
+  final String content;
+  final String image;
+  const CustomStreamState({
+    super.key,
+    required this.title,
+    required this.content,
+    required this.image,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        SizedBox(width: double.infinity, height: 100),
+        SvgPicture.asset(image, height: 250),
+        const SizedBox(height: 20),
+        Text(title, style: AppTextStyle.titleStyle),
+        const SizedBox(height: 8),
+        Text(
+          content,
+          textAlign: TextAlign.center,
+          style: AppTextStyle.contentStyle,
+        ),
+      ],
+    );
+  }
+}
+
 class CustomEventsCard extends StatelessWidget {
   final EventsModel eventsModel;
 
@@ -87,6 +116,9 @@ class CustomEventsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    
+
     final isDarkMode = HelperFunctions.isDarkMode(context);
 
     return GestureDetector(
@@ -127,7 +159,7 @@ class CustomEventsCard extends StatelessWidget {
                             height: 200,
                             width: double.infinity,
                             fit: BoxFit.cover,
-                            
+
                             loadingBuilder: (context, child, loadingProgress) {
                               if (loadingProgress == null) {
                                 return child;
@@ -153,7 +185,6 @@ class CustomEventsCard extends StatelessWidget {
                                 ),
                               );
                             },
-                            // يمكنك أيضاً إضافة معالج للأخطاء في حال فشل تحميل الصورة
                             errorBuilder: (context, error, stackTrace) {
                               return Container(
                                 height: 200,
@@ -166,7 +197,6 @@ class CustomEventsCard extends StatelessWidget {
                                 ),
                               );
                             },
-                            
                           ),
                         ),
 
@@ -221,7 +251,6 @@ class CustomEventsCard extends StatelessWidget {
 
                   const SizedBox(height: 12),
 
-                  
                   Text(
                         eventsModel.description,
                         style: TextStyle(
@@ -264,9 +293,7 @@ class CustomEventsCard extends StatelessWidget {
                                 ),
                                 const SizedBox(width: 6),
                                 Text(
-                                  HelperFunctions().formatFirestoreTimestamp(
-                                    eventsModel.eventDate,
-                                  ),
+                                  HelperFunctions().formatSafeDate(eventsModel.eventDate),
                                   style: TextStyle(
                                     color: Colors.grey[isDarkMode ? 400 : 600],
                                     fontSize: 12,

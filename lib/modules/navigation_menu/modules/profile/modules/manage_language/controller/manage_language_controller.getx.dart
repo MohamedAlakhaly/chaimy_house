@@ -32,42 +32,44 @@ class ManageLanguageControllerImp extends ManageLanguageController {
 
   List<String> languages = [
     'Français',
-    'العربية',
-    'English',
-    'Kurdî',
-    'Soomaali',
-    'Türkçe',
-    'ትግርኛ',
     'Nederlands',
+    'English',
+    'العربية',
     'Українська',
-    'پښتو',
+    'Türkçe',
     'Español',
+    'Kurdî',        
+    'Soomaali',
+    'ትግርኛ',
+    'پښتو',
   ];
+
   List<String> flags = [
     AppImages.france,
-    AppImages.saudiArabia,
+    AppImages.netherlands,
     AppImages.america,
+    AppImages.saudiArabia,
+    AppImages.ukraine,
+    AppImages.turkey,
+    AppImages.spain,
     AppImages.kurdistan,
     AppImages.somalia,
-    AppImages.turkey,
     AppImages.eritrea,
-    AppImages.netherlands,
-    AppImages.ukraine,
     AppImages.afghanistan,
-    AppImages.spain,
   ];
+
   List<String> langCode = [
     'fr',
-    'ar',
+    'nl',
     'en',
+    'ar',
+    'uk',
+    'tr',
+    'es',
     'ku',
     'so',
-    'tr',
     'ti',
-    'nl',
-    'uk',
     'ps',
-    'es',
   ];
 
   @override

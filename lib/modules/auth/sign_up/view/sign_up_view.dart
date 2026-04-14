@@ -20,7 +20,6 @@ class SignUpView extends StatelessWidget {
   Widget build(BuildContext context) {
     bool isDarkMode = HelperFunctions.isDarkMode(context);
     SignUpControllerImp controller = Get.put(SignUpControllerImp());
-    SocialAuthImp socialAuthImp = SocialAuthImp();
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -296,7 +295,11 @@ class SignUpView extends StatelessWidget {
                         children: [
                           Expanded(
                             child: GestureDetector(
-                              onTap: controller.signInWithGoogle,
+                              onTap: () {
+                                SocialAuthImp().signInWithGoogle(
+                                  controller.isLoading,
+                                );
+                              },
                               child: Container(
                                 padding: const EdgeInsets.symmetric(
                                   vertical: 12,
@@ -332,45 +335,45 @@ class SignUpView extends StatelessWidget {
                               ),
                             ),
                           ),
-                          const SizedBox(width: 20), // Increased spacing
-                          Expanded(
-                            child: GestureDetector(
-                              onTap: () {},
-                              child: Container(
-                                padding: const EdgeInsets.symmetric(
-                                  vertical: 12,
-                                ), // Adjusted padding
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(
-                                    15,
-                                  ), // More rounded
-                                  border: Border.all(
-                                    color: isDarkMode
-                                        ? Colors.grey[700]!
-                                        : Colors.grey[300]!,
-                                    width: 1.5,
-                                  ),
-                                  color: isDarkMode
-                                      ? Colors.grey[900]
-                                      : Colors.white,
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.black.withValues(
-                                        alpha: isDarkMode ? 0.1 : 0.05,
-                                      ),
-                                      blurRadius: 10,
-                                      offset: Offset(0, 4),
-                                    ),
-                                  ],
-                                ),
-                                child: SvgPicture.asset(
-                                  AppImages.facebook,
-                                  width: 30,
-                                  height: 30,
-                                ), // Adjusted size
-                              ),
-                            ),
-                          ),
+                          // const SizedBox(width: 20), // Increased spacing
+                          // Expanded(
+                          //   child: GestureDetector(
+                          //     onTap: () {},
+                          //     child: Container(
+                          //       padding: const EdgeInsets.symmetric(
+                          //         vertical: 12,
+                          //       ), // Adjusted padding
+                          //       decoration: BoxDecoration(
+                          //         borderRadius: BorderRadius.circular(
+                          //           15,
+                          //         ), // More rounded
+                          //         border: Border.all(
+                          //           color: isDarkMode
+                          //               ? Colors.grey[700]!
+                          //               : Colors.grey[300]!,
+                          //           width: 1.5,
+                          //         ),
+                          //         color: isDarkMode
+                          //             ? Colors.grey[900]
+                          //             : Colors.white,
+                          //         boxShadow: [
+                          //           BoxShadow(
+                          //             color: Colors.black.withValues(
+                          //               alpha: isDarkMode ? 0.1 : 0.05,
+                          //             ),
+                          //             blurRadius: 10,
+                          //             offset: Offset(0, 4),
+                          //           ),
+                          //         ],
+                          //       ),
+                          //       child: SvgPicture.asset(
+                          //         AppImages.facebook,
+                          //         width: 30,
+                          //         height: 30,
+                          //       ), // Adjusted size
+                          //     ),
+                          //   ),
+                          // ),
                         ],
                       )
                       .animate()
@@ -379,39 +382,40 @@ class SignUpView extends StatelessWidget {
 
                   const SizedBox(height: 20),
 
-                  Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            'have account'.tr,
-                            style: TextStyle(
-                              fontSize: AppFontsSize
-                                  .smallFontSize, // Adjusted font size
-                              color: isDarkMode
-                                  ? Colors.grey[400]
-                                  : AppColors.customGrey,
-                            ),
-                          ),
-                          const SizedBox(width: 5),
-                          GestureDetector(
-                            onTap: controller.goToSignIn,
-                            child: Text(
-                              'sign in button'.tr,
+                  Wrap(
+                    alignment: WrapAlignment.center,
+                    children: [
+                      Text(
+                        'have account'.tr,
                               style: TextStyle(
-                                fontSize:
-                                    AppFontsSize.smallFontSize +
-                                    1, // Slightly larger
-                                fontWeight: FontWeight.w700, // Bolder
-                                color: AppColors
-                                    .primary, // Primary color for emphasis
+                                fontSize: AppFontsSize
+                                    .smallFontSize, // Adjusted font size
+                                color: isDarkMode
+                                    ? Colors.grey[400]
+                                    : AppColors.customGrey,
                               ),
                             ),
-                          ),
-                        ],
-                      )
-                      .animate()
-                      .slideY(begin: 0.2, duration: 600.ms, delay: 1000.ms)
-                      .fadeIn(duration: 700.ms),
+                            const SizedBox(width: 5),
+                            GestureDetector(
+                              onTap: controller.goToSignIn,
+                              child: Text(
+                                'sign in button'.tr,
+                                style: TextStyle(
+                                  fontSize:
+                                      AppFontsSize.smallFontSize +
+                                      1, // Slightly larger
+                                  fontWeight: FontWeight.w700, // Bolder
+                                  color: AppColors
+                                      .primary, // Primary color for emphasis
+                                ),
+                              ),
+                            ),
+                          ],
+                        )
+                        .animate()
+                        .slideY(begin: 0.2, duration: 600.ms, delay: 1000.ms)
+                        .fadeIn(duration: 700.ms),
+                  
                 ],
               ),
             ),

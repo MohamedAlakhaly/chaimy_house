@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "324540492115",
+    "project_id": "chimay-house",
+    "storage_bucket": "chimay-house.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:324540492115:android:8e9ed0af99c07177ef19a6",
+        "android_client_info": {
+          "package_name": "com.example.chimay_house"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "324540492115-j862hfnt9tcn8apf3kraslp4ubb95e3h.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.chimay_house",
+            "certificate_hash": "4bed099b6ccf3d3289ebcaa33a848116a7cb748e"
+          }
+        },
+        {
+          "client_id": "324540492115-fblrk9lj7sln45212o47iuaq1a0rvvaj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCz2ONDsb7cm_09zxTToEYbo2PdooJrIBc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "324540492115-fblrk9lj7sln45212o47iuaq1a0rvvaj.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "324540492115-hjgdhb95smtf332vsnopn6nt4qrhn4uk.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.chimayHouse"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,15 +1,15 @@
 import 'package:bubble/bubble.dart';
-import 'package:chimay_house/core/services/app_services.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
-import 'package:get/get.dart';
 import 'package:chimay_house/core/constant/app_colors.dart';
 import 'package:chimay_house/core/functions/helper_functions.dart';
 import 'package:chimay_house/core/localization/local_controller.getx.dart';
 import 'package:chimay_house/global/custom_button_with_shadow.dart';
-import 'package:chimay_house/modules/auth/sign_up/widget/custom_disable_button_widget.dart';
-import 'package:chimay_house/modules/auth/chooseLanguage/controller/choose_language_controller.getx.dart';
 import 'package:chimay_house/global/custom_choose_language_button.dart';
+import 'package:chimay_house/modules/auth/chooseLanguage/controller/choose_language_controller.getx.dart';
+import 'package:chimay_house/modules/auth/sign_up/widget/custom_disable_button_widget.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart'; // إضافة المكتبة
+import 'package:get/get.dart';
 import 'package:rive/rive.dart';
 
 class ChooseLanguageView extends StatelessWidget {
@@ -17,34 +17,31 @@ class ChooseLanguageView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ChooseLanguageControllerImp controller = Get.put(
-      ChooseLanguageControllerImp(),
-    );
+    ChooseLanguageControllerImp controller = Get.put(ChooseLanguageControllerImp());
     AppLocalController langController = Get.find();
     bool isDarkMode = HelperFunctions.isDarkMode(context);
+
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: GestureDetector(
-        onTap: controller.chooseLanguage,
-        child: Container(
-          height: 85,
-          color: isDarkMode ? AppColors.bgDark : AppColors.bgLight,
-          margin: const EdgeInsets.all(5),
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
-          child: GetBuilder<ChooseLanguageControllerImp>(
-            builder: (myController) {
-              return controller.currentLanguage == ''
-                  ? CustomDisableButtonWidget(
-                      buttonChild: Text('done button'.tr),
-                      buttonColor: AppColors.primary.withValues(alpha: 0.3),
-                    )
-                  : CustomButtonWithShadow(
-                      buttonText: 'done button'.tr,
-                      buttonColor: AppColors.primary,
-                    );
-            },
-          ),
-        ),
+      floatingActionButton: GetBuilder<ChooseLanguageControllerImp>(
+        builder: (myController) {
+          return Container(
+            height: 90,
+            width: double.infinity,
+            color: isDarkMode ? AppColors.bgDark : AppColors.bgLight,
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+            child: controller.currentLanguage == ''
+                ? CustomDisableButtonWidget(
+                    buttonChild: Text('done button'.tr),
+                    buttonColor: AppColors.primary.withValues(alpha: 0.3),
+                  )
+                : CustomButtonWithShadow(
+                    buttonText: 'done button'.tr,
+                    buttonColor: AppColors.primary,
+                    onTap: controller.chooseLanguage,
+                  ).animate().scale(duration: 200.ms, curve: Curves.bounceOut),
+          );
+        },
       ),
       body: SafeArea(
         child: Padding(
@@ -52,110 +49,96 @@ class ChooseLanguageView extends StatelessWidget {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                const SizedBox(width: double.infinity, height: 30),
+                const SizedBox(width: double.infinity, height: 20),
+                
+                // الروبوت والفقاعة
                 Row(
+                  crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     Expanded(
+                      flex: 1,
                       child: SizedBox(
-                        width: 200,
-                        height: 200,
-                        child: GetBuilder<ChooseLanguageControllerImp>(
-                          builder: (myController) {
-                            return RiveAnimation.asset(
-                              'assets/animations/robot2.riv',
-                              controllers: [controller.robotController],
-                              fit: BoxFit.contain,
-                            );
-                          },
+                        height: 180,
+                        child: RiveAnimation.asset(
+                          'assets/animations/robot2.riv',
+                          controllers: [controller.robotController],
+                          fit: BoxFit.contain,
                         ),
-                      ),
+                      ).animate().slideX(begin: -0.5, end: 0, duration: 800.ms, curve: Curves.easeOutBack),
                     ),
-
-                    GetBuilder<ChooseLanguageControllerImp>(
-                      builder: (myController) {
-                        return Expanded(
-                          flex: 2,
-                          child: Bubble(
-                            nip:
-                                controller.currentLanguage == 'ar' ||
-                                    controller.currentLanguage == 'ps'
+                    Expanded(
+                      flex: 2,
+                      child: GetBuilder<ChooseLanguageControllerImp>(
+                        builder: (myController) {
+                          return Bubble(
+                            nip: (controller.currentLanguage == 'ar' || controller.currentLanguage == 'ps')
                                 ? BubbleNip.rightCenter
                                 : BubbleNip.leftCenter,
                             stick: true,
-                            padding: const BubbleEdges.only(bottom: 20),
-                            color: AppColors.customGrey.withValues(alpha: 0.3),
-                            child: controller.currentLanguage != ''
-                                ? Text(
-                                    'language selected'.tr,
-                                    style: TextStyle(
-                                      fontSize: AppFontsSize.smallFontSize,
-                                    ),
-                                  )
-                                : Text(
-                                    controller.selectLanguage,
-                                    style: TextStyle(
-                                      fontSize: AppFontsSize.smallFontSize,
-                                    ),
-                                  ),
-                          ),
-                        );
-                      },
+                            elevation: 2,
+                            padding: const BubbleEdges.all(12),
+                            color: isDarkMode ? Colors.grey[800] : Colors.white,
+                            child: Text(
+                              controller.currentLanguage != '' 
+                                  ? 'language selected'.tr 
+                                  : controller.selectLanguage,
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500,
+                                color: isDarkMode ? Colors.white : Colors.black87,
+                              ),
+                            ),
+                          )
+                          .animate(key: ValueKey(controller.currentLanguage)) // إعادة الأنميشن عند تغيير النص
+                          .shake(duration: 400.ms)
+                          .fadeIn();
+                        },
+                      ),
                     ),
                   ],
                 ),
-                const SizedBox(height: 20),
-                ListView.separated(
-                  itemCount: controller.languages.length,
-                  shrinkWrap: true,
-                  physics: const BouncingScrollPhysics(),
-                  itemBuilder: (context, index) {
-                    return GetBuilder<ChooseLanguageControllerImp>(
-                      builder: (myController) {
-                        return CustomChooseLanguageButton(
-                              language: controller.languages[index],
-                              flag: controller.flags[index],
-                              borderColor:
-                                  controller.currentLanguage !=
-                                      controller.langCode[index]
-                                  ? AppColors.customGrey
-                                  : AppColors.primary,
-                              bgColor:
-                                  controller.currentLanguage !=
-                                      controller.langCode[index]
-                                  ? Colors.transparent
-                                  : AppColors.primary.withValues(alpha: 0.3),
-                              onTap: () {
-                                //! update language and UI
-                                controller.currentLanguage =
-                                    controller.langCode[index];
 
-                                //! chang local
-                                langController.changeLocal(
-                                  controller.langCode[index],
-                                );
+                const SizedBox(height: 30),
 
-                                controller.update();
+                // قائمة اللغات مع Staggered Animation
+                AnimationLimiter(
+                  child: ListView.separated(
+                    itemCount: controller.languages.length,
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemBuilder: (context, index) {
+                      return AnimationConfiguration.staggeredList(
+                        position: index,
+                        duration: const Duration(milliseconds: 600),
+                        child: SlideAnimation(
+                          horizontalOffset: 50.0,
+                          child: FadeInAnimation(
+                            child: GetBuilder<ChooseLanguageControllerImp>(
+                              builder: (myController) {
+                                bool isSelected = controller.currentLanguage == controller.langCode[index];
+                                return CustomChooseLanguageButton(
+                                  language: controller.languages[index],
+                                  flag: controller.flags[index],
+                                  borderColor: isSelected ? AppColors.primary : AppColors.customGrey,
+                                  bgColor: isSelected ? AppColors.primary.withValues(alpha: 0.1) : Colors.transparent,
+                                  onTap: () {
+                                    controller.currentLanguage = controller.langCode[index];
+                                    langController.changeLocal(controller.langCode[index]);
+                                    controller.update();
+                                  },
+                                )
+                                .animate(target: isSelected ? 1 : 0)
+                                .scale(end: const Offset(1.02, 1.02), duration: 200.ms);
                               },
-                            )
-                            .animate()
-                            .fadeIn(
-                              delay: (200 + index * 100).ms,
-                              duration: 600.ms,
-                            )
-                            .slideX(
-                              begin: 0.2,
-                              delay: (200 + index * 100).ms,
-                              duration: 600.ms,
-                              curve: Curves.easeOut,
-                            );
-                      },
-                    );
-                  },
-                  separatorBuilder: (context, index) {
-                    return const SizedBox(height: 10);
-                  },
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                    separatorBuilder: (context, index) => const SizedBox(height: 12),
+                  ),
                 ),
-                const SizedBox(height: 90),
+                const SizedBox(height: 100),
               ],
             ),
           ),

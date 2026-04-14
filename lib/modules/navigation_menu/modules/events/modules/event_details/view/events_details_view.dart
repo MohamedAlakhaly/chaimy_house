@@ -179,7 +179,7 @@ class EventDetailView extends StatelessWidget {
                                     ),
                                     const SizedBox(height: 4),
                                     Text(
-                                      HelperFunctions().formatFirestoreTimestamp(
+                                      HelperFunctions().formatSafeDate(
                                         event.eventDate,
                                       ),
                                       textAlign: TextAlign.center,

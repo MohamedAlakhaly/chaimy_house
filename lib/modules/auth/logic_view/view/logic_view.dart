@@ -9,9 +9,9 @@ class LogicView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Get.put(LogicAuthControllerImp());
     bool isDarkMode = HelperFunctions.isDarkMode(context);
     // Get.find<LogicAuthControllerImp>();
-    Get.put(LogicAuthControllerImp());
     return Scaffold(
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,

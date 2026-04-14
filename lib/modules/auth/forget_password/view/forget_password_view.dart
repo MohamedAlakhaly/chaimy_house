@@ -100,30 +100,32 @@ class ForgetPasswordView extends StatelessWidget {
 
               const SizedBox(height: 32),
 
-              Obx((){
+              Obx(() {
                 return CustomButtonWithShadow(
-                    buttonText: 'sendEmailButton'.tr,
-                    buttonColor: AppColors.primary,
-                    onTap: controller.sendEmail,
-                    isCustomChild: controller.isLoading.value == false
-                        ? false
-                        : true,
-                    customChild: CircularProgressIndicator(color: Colors.white,),
-                  )
-                  .animate()
-                  .slideY(begin: 0.3, duration: 800.ms, curve: Curves.easeOut)
-                  .fadeIn(duration: 800.ms);
+                      buttonText: 'sendEmailButton'.tr,
+                      buttonColor: AppColors.primary,
+                      onTap: controller.sendEmail,
+                      isCustomChild: controller.isLoading.value == false
+                          ? false
+                          : true,
+                      customChild: CircularProgressIndicator(
+                        color: Colors.white,
+                      ),
+                    )
+                    .animate()
+                    .slideY(begin: 0.3, duration: 800.ms, curve: Curves.easeOut)
+                    .fadeIn(duration: 800.ms);
               }),
 
               const SizedBox(height: 32),
 
-              Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        'RememberYourPassword'.tr,
-                        style: TextStyle(
-                          color: isDarkMode
+              Wrap(
+                alignment: WrapAlignment.center,
+                children: [
+                  Text(
+                    'RememberYourPassword'.tr,
+                    style: TextStyle(
+                      color: isDarkMode
                               ? Colors.grey[400]
                               : Colors.grey[600],
                           fontSize: AppFontsSize.smallFontSize,

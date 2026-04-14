@@ -6,7 +6,7 @@ import 'package:chimay_house/core/functions/helper_functions.dart';
 import 'package:chimay_house/global/custom_appbar.dart';
 import 'package:chimay_house/global/custom_text_form_field_widget.dart';
 import 'package:chimay_house/models/static/auth/user_model.module.dart';
-import 'package:chimay_house/modules/navigation_menu/modules/profile/modules/edit_personal_detailes/controller/edit_personal_detailes_controller.getx.dart';
+import 'package:chimay_house/modules/navigation_menu/modules/profile/modules/edit_personal_details/controller/edit_personal_details_controller.getx.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -15,9 +15,9 @@ import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:intl/intl.dart';
 
-class EditPersonalDetailesView extends StatelessWidget {
+class EditPersonalDetailsView extends StatelessWidget {
   final UserModel userModel;
-  const EditPersonalDetailesView({super.key, required this.userModel});
+  const EditPersonalDetailsView({super.key, required this.userModel});
 
   @override
   Widget build(BuildContext context) {
@@ -28,16 +28,16 @@ class EditPersonalDetailesView extends StatelessWidget {
       return DateFormat("dd / MM / y").format(dateTime);
     }
 
-    EditPersonalDetailesControllerImp controller = Get.put(
-      EditPersonalDetailesControllerImp(),
+    EditPersonalDetailsControllerImp controller = Get.put(
+      EditPersonalDetailsControllerImp(),
     );
     controller.nameController.text = userModel.username;
     bool isDarkMode = HelperFunctions.isDarkMode(context);
     return Scaffold(
       appBar: CustomAppBar(
-        title: 'editPersonalDetailesAppBarTitle'.tr,
+        title: 'editPersonalDetailsAppBarTitle'.tr,
         actions: [
-          GetBuilder<EditPersonalDetailesControllerImp>(
+          GetBuilder<EditPersonalDetailsControllerImp>(
             builder: (myController) {
               return GestureDetector(
                 onTap: () {
@@ -78,7 +78,7 @@ class EditPersonalDetailesView extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: Column(
             children: [
-              GetBuilder<EditPersonalDetailesControllerImp>(
+              GetBuilder<EditPersonalDetailsControllerImp>(
                 builder: (controller) {
                   return Stack(
                     children: [
@@ -200,7 +200,7 @@ class EditPersonalDetailesView extends StatelessWidget {
     );
   }
 
-  Widget _buildProfileImage(EditPersonalDetailesControllerImp controller) {
+  Widget _buildProfileImage(EditPersonalDetailsControllerImp controller) {
     if (controller.pickedImage != null) {
       return Image.file(
         controller.pickedImage!,

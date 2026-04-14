@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class UserModel {
   final String id;
   final String username;
-  final int roomNumber;
+  final int? roomNumber;
   final bool isActive;
   final String email;
   final Timestamp createdAt;
@@ -30,7 +30,7 @@ class UserModel {
       isActive: map['isActive'] ?? false,
       createdAt: map['createdAt'] ?? Timestamp.now(),
       role: map['role'] ?? 'user',
-      imageUrl: map['iamgeUrl']??''
+      imageUrl: map['imageUrl']??''
     );
   }
 

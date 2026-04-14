@@ -65,6 +65,7 @@ class AppImages {
 
   //! global
   static String empty = 'assets/images/global/empty.svg';
+  static String notify = 'assets/images/global/notify.svg';
   static String noStories = 'assets/images/global/no_stories.svg';
   static String noArticles = 'assets/images/global/no_articles.svg';
   static String cleaningScheduleEmpty = 'assets/images/category/cleaning_schedule_empty.svg';

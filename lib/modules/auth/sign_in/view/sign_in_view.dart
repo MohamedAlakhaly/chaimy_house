@@ -1,3 +1,4 @@
+import 'package:chimay_house/core/functions/social_method.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -251,7 +252,7 @@ class SignInView extends GetView<SignInControllerImp> {
                       Expanded(
                         child: GestureDetector(
                           onTap: () {
-                            // Handle Google sign-in
+                            SocialAuthImp().signInWithGoogle(controller.isLoading);
                           },
                           child: Container(
                             padding: const EdgeInsets.symmetric(
@@ -282,37 +283,37 @@ class SignInView extends GetView<SignInControllerImp> {
                         ),
                       ),
                       const SizedBox(width: 20), // Increased spacing
-                      Expanded(
-                        child: GestureDetector(
-                          onTap: () {},
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 12), // Adjusted padding
-                            decoration: BoxDecoration(
-                              borderRadius:
-                                  BorderRadius.circular(15), // More rounded
-                              border: Border.all(
-                                color: isDarkMode
-                                    ? Colors.grey[700]!
-                                    : Colors.grey[300]!,
-                                width: 1.5,
-                              ),
-                              color:
-                                  isDarkMode ? Colors.grey[900] : Colors.white,
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black.withValues(
-                                      alpha: isDarkMode ? 0.1 : 0.05),
-                                  blurRadius: 10,
-                                  offset: Offset(0, 4),
-                                ),
-                              ],
-                            ),
-                            child: SvgPicture.asset(AppImages.facebook,
-                                width: 30, height: 30), // Adjusted size
-                          ),
-                        ),
-                      ),
+                    //   Expanded(
+                    //     child: GestureDetector(
+                    //       onTap: () {},
+                    //       child: Container(
+                    //         padding: const EdgeInsets.symmetric(
+                    //             vertical: 12), // Adjusted padding
+                    //         decoration: BoxDecoration(
+                    //           borderRadius:
+                    //               BorderRadius.circular(15), // More rounded
+                    //           border: Border.all(
+                    //             color: isDarkMode
+                    //                 ? Colors.grey[700]!
+                    //                 : Colors.grey[300]!,
+                    //             width: 1.5,
+                    //           ),
+                    //           color:
+                    //               isDarkMode ? Colors.grey[900] : Colors.white,
+                    //           boxShadow: [
+                    //             BoxShadow(
+                    //               color: Colors.black.withValues(
+                    //                   alpha: isDarkMode ? 0.1 : 0.05),
+                    //               blurRadius: 10,
+                    //               offset: Offset(0, 4),
+                    //             ),
+                    //           ],
+                    //         ),
+                    //         child: SvgPicture.asset(AppImages.facebook,
+                    //             width: 30, height: 30), // Adjusted size
+                    //       ),
+                    //     ),
+                    //   ),
                     ],
                   )
                       .animate()
@@ -326,8 +327,8 @@ class SignInView extends GetView<SignInControllerImp> {
                   const SizedBox(height: 20),
 
                   // Sign up prompt with animation
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                  Wrap(
+                    alignment: WrapAlignment.center,
                     children: [
                       Text(
                         'haven\'t account'.tr,

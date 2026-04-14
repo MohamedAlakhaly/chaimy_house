@@ -5,6 +5,8 @@ import 'package:chimay_house/core/localization/local_controller.getx.dart';
 import 'package:chimay_house/core/services/app_services.dart';
 import 'package:chimay_house/firebase_options.dart';
 import 'package:chimay_house/models/static/reminder_model.dart';
+import 'package:chimay_house/modules/auth/chooseLanguage/view/choose_language_view.dart';
+import 'package:chimay_house/modules/auth/logic_view/controller/logic_auth_controller.getx.dart';
 import 'package:chimay_house/routes.dart';
 import 'package:chimay_house/theme/app_theme.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -75,7 +77,7 @@ class _MyAppState extends State<MyApp> {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       initialRoute: AppRoutes.splash,
-      // home: ILAHomePage(),
+      // home: ChooseLanguageView(),
       locale: Locale(langCode.toLowerCase()),
       translations: MyLocal(),
       fallbackLocale: Locale('en'),

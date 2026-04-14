@@ -1,15 +1,15 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:chimay_house/core/constant/app_colors.dart';
 import 'package:chimay_house/core/constant/app_images.dart';
 import 'package:chimay_house/core/constant/app_text_style.dart';
 import 'package:chimay_house/core/functions/helper_functions.dart';
 import 'package:chimay_house/global/custom_loading_circular.dart';
 import 'package:chimay_house/models/static/auth/user_model.module.dart';
-import 'package:chimay_house/modules/auth/sign_in/view/sign_in_view.dart';
 import 'package:chimay_house/modules/navigation_menu/modules/profile/modules/about_app/view/about_app_view.dart';
 import 'package:chimay_house/modules/navigation_menu/modules/profile/modules/change_theme/view/change_theme_view.dart';
-import 'package:chimay_house/modules/navigation_menu/modules/profile/modules/edit_personal_detailes/view/edit_personal_detailes_view.dart';
-import 'package:chimay_house/modules/navigation_menu/modules/profile/modules/faq/view/faq_view.dart';
+import 'package:chimay_house/modules/navigation_menu/modules/profile/modules/edit_personal_details/view/edit_personal_details_view.dart';
 import 'package:chimay_house/modules/navigation_menu/modules/profile/modules/manage_language/view/manage_language_view.dart';
+import 'package:chimay_house/modules/navigation_menu/modules/profile/modules/privacy_police/view/privacy_police_view.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -25,233 +25,249 @@ class ProfileView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     bool isDarkMode = HelperFunctions.isDarkMode(context);
-
-    String formatFirestoreTimestampOnlyDateWithNormalStyle(
-      Timestamp timestamp,
-    ) {
-      DateTime dateTime = timestamp.toDate();
-      return DateFormat("dd / MM / y").format(dateTime);
-    }
-
     return Scaffold(
-      body: SingleChildScrollView(
-        child: StreamBuilder<DocumentSnapshot>(
-          stream: FirebaseFirestore.instance
-              .collection('users')
-              .doc(FirebaseAuth.instance.currentUser!.uid)
-              .snapshots(),
-          builder: (context, snapshot) {
-            if (snapshot.hasError) {
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const SizedBox(width: double.infinity, height: 100),
-                  SvgPicture.asset(AppImages.errorGetData, height: 250),
-                  const SizedBox(height: 20),
-                  Text(
-                    'cleaningScheduleErrorGetDataTitle'.tr,
-                    style: AppTextStyle.titleStyle,
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    'cleaningScheduleErrorGetDataContent'.tr,
-                    textAlign: TextAlign.center,
-                    style: AppTextStyle.contentStyle,
-                  ),
-                ],
-              );
-            }
+      body: Container(
+        color: AppColors.primary,
+        child: SafeArea(
+          child: Container(
+            color: Theme.of(context).scaffoldBackgroundColor,
+            child: SingleChildScrollView(
+              child: StreamBuilder<DocumentSnapshot>(
+                stream: FirebaseFirestore.instance
+                    .collection('users')
+                    .doc(FirebaseAuth.instance.currentUser!.uid)
+                    .snapshots(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasError) {
+                    return Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const SizedBox(width: double.infinity, height: 100),
+                        SvgPicture.asset(AppImages.errorGetData, height: 250),
+                        const SizedBox(height: 20),
+                        Text(
+                          'cleaningScheduleErrorGetDataTitle'.tr,
+                          style: AppTextStyle.titleStyle,
+                        ),
+                        const SizedBox(height: 8),
+                        Text(
+                          'cleaningScheduleErrorGetDataContent'.tr,
+                          textAlign: TextAlign.center,
+                          style: AppTextStyle.contentStyle,
+                        ),
+                      ],
+                    );
+                  }
 
-            if (!snapshot.hasData ||
-                snapshot.connectionState == ConnectionState.waiting) {
-              return CustomLoadingCircular();
-            }
+                  if (!snapshot.hasData ||
+                      snapshot.connectionState == ConnectionState.waiting) {
+                    return CustomLoadingCircular();
+                  }
 
-            if (snapshot.data!.data() == null) {
-              return Column(  mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const SizedBox(width: double.infinity, height: 100),
-                  SvgPicture.asset(AppImages.errorGetData, height: 250),
-                  const SizedBox(height: 20),
-                  Text(
-                    'cleaningScheduleErrorGetDataTitle'.tr,
-                    style: AppTextStyle.titleStyle,
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    'cleaningScheduleErrorGetDataContent'.tr,
-                    textAlign: TextAlign.center,
-                    style: AppTextStyle.contentStyle,
-                  ),
-                ],);
-            }
+                  if (snapshot.data!.data() == null) {
+                    return Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const SizedBox(width: double.infinity, height: 100),
+                        SvgPicture.asset(AppImages.errorGetData, height: 250),
+                        const SizedBox(height: 20),
+                        Text(
+                          'cleaningScheduleErrorGetDataTitle'.tr,
+                          style: AppTextStyle.titleStyle,
+                        ),
+                        const SizedBox(height: 8),
+                        Text(
+                          'cleaningScheduleErrorGetDataContent'.tr,
+                          textAlign: TextAlign.center,
+                          style: AppTextStyle.contentStyle,
+                        ),
+                      ],
+                    );
+                  }
 
-            final userData = snapshot.data!.data() as Map<String, dynamic>;
-            final userModel = UserModel.fromMap(userData, snapshot.data!.id);
+                  final userData =
+                      snapshot.data!.data() as Map<String, dynamic>;
+                  final userModel = UserModel.fromMap(
+                    userData,
+                    snapshot.data!.id,
+                  );
 
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _buildProfileHeader(userModel: userModel)
-                    .animate()
-                    .fadeIn(duration: 600.ms)
-                    .slideY(
-                      begin: -0.2,
-                      duration: 600.ms,
-                      curve: Curves.easeOut,
-                    ),
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _buildProfileHeader(userModel: userModel)
+                          .animate()
+                          .fadeIn(duration: 600.ms)
+                          .slideY(
+                            begin: -0.2,
+                            duration: 600.ms,
+                            curve: Curves.easeOut,
+                          ),
 
-                const SizedBox(height: 20),
+                      const SizedBox(height: 20),
 
-                _buildSectionHeader(
-                  icon: Iconsax.setting_2,
-                  title: 'generalCategory'.tr,
-                  isDarkMode: isDarkMode,
-                ).animate()
-                    .fadeIn(duration: 600.ms)
-                    .slideX(
-                      begin: -0.2,
-                      duration: 600.ms,
-                      curve: Curves.easeOut,
-                    ),
+                      _buildSectionHeader(
+                            icon: Iconsax.setting_2,
+                            title: 'generalCategory'.tr,
+                            isDarkMode: isDarkMode,
+                          )
+                          .animate()
+                          .fadeIn(duration: 600.ms)
+                          .slideX(
+                            begin: -0.2,
+                            duration: 600.ms,
+                            curve: Curves.easeOut,
+                          ),
 
-                const SizedBox(height: 12),
+                      const SizedBox(height: 12),
 
-                _buildSettingCard(
-                  icon: Icons.person_outline,
-                  title: 'PersonalDetailsTitle'.tr,
-                  subtitle: 'PersonalDetailsDescription'.tr,
-                  isDarkMode: isDarkMode,
-                  onTap: () => Get.to(
-                    () => EditPersonalDetailesView(userModel: userModel),
-                  ),
-                ).animate()
-                    .fadeIn(duration: 700.ms)
-                    .slideX(
-                      begin: -0.2,
-                      duration: 700.ms,
-                      curve: Curves.easeOut,
-                    ),
+                      _buildSettingCard(
+                            icon: Icons.person_outline,
+                            title: 'PersonalDetailsTitle'.tr,
+                            subtitle: 'PersonalDetailsDescription'.tr,
+                            isDarkMode: isDarkMode,
+                            onTap: () => Get.to(
+                              () =>
+                                  EditPersonalDetailsView(userModel: userModel),
+                            ),
+                          )
+                          .animate()
+                          .fadeIn(duration: 700.ms)
+                          .slideX(
+                            begin: -0.2,
+                            duration: 700.ms,
+                            curve: Curves.easeOut,
+                          ),
 
-                const SizedBox(height: 12),
+                      const SizedBox(height: 12),
 
-                _buildSettingCard(
-                  icon: Iconsax.language_circle,
-                  title: 'lanuageTitle'.tr,
-                  subtitle: 'lanuageDescription'.tr,
-                  isDarkMode: isDarkMode,
-                  onTap: () => Get.to(() => ManageLanguageView()),
-                ).animate()
-                    .fadeIn(duration: 800.ms)
-                    .slideX(
-                      begin: -0.2,
-                      duration: 800.ms,
-                      curve: Curves.easeOut,
-                    ),
+                      _buildSettingCard(
+                            icon: Iconsax.language_circle,
+                            title: 'lanuageTitle'.tr,
+                            subtitle: 'lanuageDescription'.tr,
+                            isDarkMode: isDarkMode,
+                            onTap: () => Get.to(() => ManageLanguageView()),
+                          )
+                          .animate()
+                          .fadeIn(duration: 800.ms)
+                          .slideX(
+                            begin: -0.2,
+                            duration: 800.ms,
+                            curve: Curves.easeOut,
+                          ),
 
-                const SizedBox(height: 12),
+                      const SizedBox(height: 12),
 
-                _buildSettingCard(
-                  icon: Iconsax.moon,
-                  title: 'themeTitle'.tr,
-                  subtitle: 'themeDescription'.tr,
-                  isDarkMode: isDarkMode,
-                  onTap: () => Get.to(() => ChangeThemeView()),
-                ).animate()
-                    .fadeIn(duration:900.ms)
-                    .slideX(
-                      begin: -0.2,
-                      duration: 900.ms,
-                      curve: Curves.easeOut,
-                    ),
+                      _buildSettingCard(
+                            icon: Iconsax.moon,
+                            title: 'themeTitle'.tr,
+                            subtitle: 'themeDescription'.tr,
+                            isDarkMode: isDarkMode,
+                            onTap: () => Get.to(() => ChangeThemeView()),
+                          )
+                          .animate()
+                          .fadeIn(duration: 900.ms)
+                          .slideX(
+                            begin: -0.2,
+                            duration: 900.ms,
+                            curve: Curves.easeOut,
+                          ),
 
-                const SizedBox(height: 12),
+                      const SizedBox(height: 12),
 
-                _buildSettingCard(
-                  icon: Iconsax.logout,
-                  title: 'signOutTitle'.tr,
-                  subtitle: 'signOutDescription'.tr,
-                  isDarkMode: isDarkMode,
-                  isDestructive: true,
-                  onTap: () async {
-                    await FirebaseAuth.instance.signOut();
-                    // Get.offAll(() => SignInView());
-                  },
-                ).animate()
-                    .fadeIn(duration: 1000.ms)
-                    .slideX(
-                      begin: -0.2,
-                      duration: 1000.ms,
-                      curve: Curves.easeOut,
-                    ),
+                      _buildSettingCard(
+                            icon: Iconsax.logout,
+                            title: 'signOutTitle'.tr,
+                            subtitle: 'signOutDescription'.tr,
+                            isDarkMode: isDarkMode,
+                            isDestructive: true,
+                            onTap: () async {
+                              await FirebaseAuth.instance.signOut();
+                              // Get.offAll(() => SignInView());
+                            },
+                          )
+                          .animate()
+                          .fadeIn(duration: 1000.ms)
+                          .slideX(
+                            begin: -0.2,
+                            duration: 1000.ms,
+                            curve: Curves.easeOut,
+                          ),
 
-                const SizedBox(height: 30),
+                      const SizedBox(height: 30),
 
-                _buildSectionHeader(
-                  icon: Iconsax.info_circle,
-                  title: 'AboutCategory'.tr,
-                  isDarkMode: isDarkMode,
-                ).animate()
-                    .fadeIn(duration: 1100.ms)
-                    .slideX(
-                      begin: -0.2,
-                      duration: 1100.ms,
-                      curve: Curves.easeOut,
-                    ),
+                      _buildSectionHeader(
+                            icon: Iconsax.info_circle,
+                            title: 'AboutCategory'.tr,
+                            isDarkMode: isDarkMode,
+                          )
+                          .animate()
+                          .fadeIn(duration: 1100.ms)
+                          .slideX(
+                            begin: -0.2,
+                            duration: 1100.ms,
+                            curve: Curves.easeOut,
+                          ),
 
-                const SizedBox(height: 12),
+                      const SizedBox(height: 12),
 
-                _buildSettingCard(
-                  icon: Iconsax.document_text,
-                  title: 'aboutAppTitle'.tr,
-                  subtitle: 'aboutAppDescription'.tr,
-                  isDarkMode: isDarkMode,
-                  onTap: ()=>Get.to(()=>AboutAppView()),
-                ).animate()
-                    .fadeIn(duration: 1200.ms)
-                    .slideX(
-                      begin: -0.2,
-                      duration: 1200.ms,
-                      curve: Curves.easeOut,
-                    ),
+                      _buildSettingCard(
+                            icon: Iconsax.document_text,
+                            title: 'aboutAppTitle'.tr,
+                            subtitle: 'aboutAppDescription'.tr,
+                            isDarkMode: isDarkMode,
+                            onTap: () => Get.to(() => AboutAppView()),
+                          )
+                          .animate()
+                          .fadeIn(duration: 1200.ms)
+                          .slideX(
+                            begin: -0.2,
+                            duration: 1200.ms,
+                            curve: Curves.easeOut,
+                          ),
 
-                const SizedBox(height: 12),
+                      const SizedBox(height: 12),
 
-                _buildSettingCard(
-                  icon: Iconsax.code_circle,
-                  title: 'versionTitle'.tr,
-                  subtitle: 'versionDescription'.tr,
-                  isDarkMode: isDarkMode,
-                  showArrow: false,
-                  onTap: () {},
-                ).animate()
-                    .fadeIn(duration: 1300.ms)
-                    .slideX(
-                      begin: -0.2,
-                      duration: 1300.ms,
-                      curve: Curves.easeOut,
-                    ),
+                      _buildSettingCard(
+                            icon: Iconsax.code_circle,
+                            title: 'versionTitle'.tr,
+                            subtitle: 'versionDescription'.tr,
+                            isDarkMode: isDarkMode,
+                            showArrow: false,
+                            onTap: () {},
+                          )
+                          .animate()
+                          .fadeIn(duration: 1300.ms)
+                          .slideX(
+                            begin: -0.2,
+                            duration: 1300.ms,
+                            curve: Curves.easeOut,
+                          ),
 
-                const SizedBox(height: 12),
+                      const SizedBox(height: 12),
 
-                _buildSettingCard(
-                  icon: Iconsax.shield_tick,
-                  title: 'privacyPolicyTitle'.tr,
-                  subtitle: 'privacyPolicyDescription'.tr,
-                  isDarkMode: isDarkMode,
-                  onTap: () {},
-                ).animate()
-                    .fadeIn(duration: 1400.ms)
-                    .slideX(
-                      begin: -0.2,
-                      duration: 1400.ms,
-                      curve: Curves.easeOut,
-                    ),
+                      _buildSettingCard(
+                            icon: Iconsax.shield_tick,
+                            title: 'privacyPolicyTitle'.tr,
+                            subtitle: 'privacyPolicyDescription'.tr,
+                            isDarkMode: isDarkMode,
+                            onTap: () => Get.to(() => PrivacyPolicyView()),
+                          )
+                          .animate()
+                          .fadeIn(duration: 1400.ms)
+                          .slideX(
+                            begin: -0.2,
+                            duration: 1400.ms,
+                            curve: Curves.easeOut,
+                          ),
 
-                const SizedBox(height: 30),
-              ],
-            );
-          },
+                      const SizedBox(height: 30),
+                    ],
+                  );
+                },
+              ),
+            ),
+          ),
         ),
       ),
     );
@@ -262,11 +278,7 @@ Widget _buildProfileHeader({required UserModel userModel}) {
   return Container(
     padding: const EdgeInsets.only(bottom: 10),
     decoration: BoxDecoration(
-      gradient: LinearGradient(
-        begin: Alignment.topLeft,
-        end: Alignment.bottomRight,
-        colors: [AppColors.primary, AppColors.primary.withValues(alpha: 0.8)],
-      ),
+      color: AppColors.primary,
       borderRadius: const BorderRadius.only(
         bottomLeft: Radius.circular(30),
         bottomRight: Radius.circular(30),
@@ -311,23 +323,28 @@ Widget _buildProfileHeader({required UserModel userModel}) {
                                   width: 140,
                                   height: 140,
                                 )
-                              : Image.network(
-                                  userModel.imageUrl,
+                              : CachedNetworkImage(
+                                  imageUrl: userModel.imageUrl,
                                   width: 140,
                                   height: 140,
                                   fit: BoxFit.cover,
 
-                                  loadingBuilder: (context, child, progress) {
-                                    if (progress == null) return child;
-                                    return const Center(
+                                  placeholder: (context, url) => const Center(
+                                    child: SizedBox(
+                                      width: 20,
+                                      height: 20,
                                       child: CircularProgressIndicator(
                                         strokeWidth: 2,
                                         color: AppColors.primary,
                                       ),
-                                    );
-                                  },
-                                  errorBuilder: (context, error, stackTrace) =>
-                                      SvgPicture.asset(AppImages.avatar),
+                                    ),
+                                  ),
+
+                                  errorWidget: (context, url, error) =>
+                                      SvgPicture.asset(
+                                        AppImages.avatar,
+                                        fit: BoxFit.cover,
+                                      ),
                                 ),
                         ),
                       ),

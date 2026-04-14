@@ -74,23 +74,32 @@ class RemindersView extends StatelessWidget {
         ),
       ).animate().scale(duration: 600.ms).fadeIn(duration: 700.ms),
 
-      // داخل كلاس RemindersView وفي دالة build:
 
-      // ... الكود العلوي (Scaffold, AppBar) يبقى كما هو ...
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(10),
           child: SingleChildScrollView(
-            // استبدال StreamBuilder بـ ValueListenableBuilder
             child: ValueListenableBuilder(
               valueListenable: controller.remindersBox.listenable(),
               builder: (context, Box<RemindersModel> box, _) {
-                // 1. جلب كل التذكيرات من Hive
                 final allReminders = box.values.toList();
+
+                if (allReminders.isEmpty) {
+            return Column(
+              children: [
+                SizedBox(height: MediaQuery.of(context).size.height * 0.15),
+                _buildMessageState(
+                  isDarkMode: isDarkMode,
+                  imagePath: AppImages.noNotificationsAnimation,
+                  message: 'warningEmptyReminderTitle'.tr,
+                  subMessage: 'warningEmptyReminderContent'.tr,
+                ).animate().fadeIn(duration: 600.ms).scale(),
+              ],
+            );
+          }
 
                 return Column(
                   children: [
-                    // التقويم (Calendar)
                     Obx(
                       () => TableCalendar(
                         locale: controller.langCode,
@@ -123,11 +132,9 @@ class RemindersView extends StatelessWidget {
 
                     const SizedBox(height: 20),
 
-                    // عرض التذكيرات المفلترة حسب اليوم المختار
                     Obx(() {
                       final selected = controller.selectedDay.value;
 
-                      // 2. تصفية التذكيرات لليوم المحدد فقط
                       final filteredReminders = allReminders.where((reminder) {
                         return isSameDay(reminder.dateAndTime, selected);
                       }).toList();
@@ -246,15 +253,22 @@ class ReminderCard extends StatelessWidget {
     final controller = Get.find<RemindersControllerImp>();
     final DateTime dateTime = remindersModel.dateAndTime;
     AppServices services = Get.find();
-    String? langCode =
-        services.sharedPreferences.getString('langCode') ??
-        Get.deviceLocale?.languageCode ??
-        'EN';
-    final formattedDate = DateFormat(
-      'EEEE, dd MMM yyyy',
-      langCode,
-    ).format(dateTime);
-    final formattedTime = DateFormat('hh:mm a', langCode).format(dateTime);
+    String rawLang = services.sharedPreferences.getString('langCode') ?? 
+                 Get.deviceLocale?.languageCode ?? 'en';
+
+List<String> dateSafeLocales = ['en', 'ar', 'fr', 'es', 'tr', 'nl', 'uk'];
+
+String safeDateFormatLocale = dateSafeLocales.contains(rawLang) ? rawLang : 'en';
+
+final formattedDate = DateFormat(
+  'EEEE, dd MMM yyyy',
+  safeDateFormatLocale, 
+).format(dateTime);
+
+final formattedTime = DateFormat(
+  'hh:mm a', 
+  safeDateFormatLocale, 
+).format(dateTime);
     bool isDarkMode = HelperFunctions.isDarkMode(context);
 
     final Color cardBorderColor =
@@ -330,12 +344,11 @@ class ReminderCard extends StatelessWidget {
         decoration: BoxDecoration(
           color: cardBorderColor.withValues(alpha: 0.1), // Adaptive background
           borderRadius: BorderRadius.circular(16), // More rounded corners
-          // داخل الـ BoxDecoration الخاص بالـ child Container
           border: Border(
-            right: langCode == 'ar' || langCode == 'ps'
+            right: safeDateFormatLocale == 'ar' || safeDateFormatLocale == 'ps'
                 ? BorderSide(color: cardBorderColor, width: 5)
                 : BorderSide.none,
-            left: langCode != 'ar' || langCode == 'ps'
+            left: safeDateFormatLocale != 'ar' || safeDateFormatLocale == 'ps'
                 ? BorderSide(color: cardBorderColor, width: 5)
                 : BorderSide.none,
           ), // Subtle border
@@ -405,7 +418,7 @@ class ReminderCard extends StatelessWidget {
                                   child: Text(
                                     '$formattedDate  |   $formattedTime',
                                     style: TextStyle(
-                                      color: Colors.grey.shade300,
+                                      color: isDarkMode?Colors.grey.shade300:Colors.grey.shade600,
                                       fontWeight: FontWeight.bold,
                                     ),
                                     softWrap: true,
@@ -438,7 +451,7 @@ class ReminderCard extends StatelessWidget {
                                 Text(
                                   formattedTime,
                                   style: TextStyle(
-                                    color: Colors.grey.shade300,
+                                    color: isDarkMode?Colors.grey.shade300:Colors.grey.shade600,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),

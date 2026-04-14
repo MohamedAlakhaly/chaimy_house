@@ -1,11 +1,9 @@
 import 'dart:developer';
-
 import 'package:chimay_house/core/constant/app_colors.dart';
 import 'package:chimay_house/core/constant/app_images.dart';
 import 'package:chimay_house/core/functions/helper_functions.dart';
 import 'package:chimay_house/global/custom_appbar.dart';
-import 'package:chimay_house/global/custom_normal_button.dart';
-import 'package:chimay_house/modules/auth/sign_up/widget/custom_disable_button_widget.dart';
+import 'package:chimay_house/global/custom_button_with_shadow.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -73,16 +71,13 @@ class WorkingHoursView extends StatelessWidget {
                 color: isDarkMode ? AppColors.bgDark : AppColors.bgLight,
                 child: SafeArea(
                   top: false,
-                  child: CustomDisableButtonWidget(
-                    buttonChild: Text(
-                      'Make appointment',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: AppFontsSize.mediumFontSize,
-                      ),
+                  child: SizedBox(
+                    height: 50,
+                    child: CustomButtonWithShadow(
+                      buttonText: 'Make appointment',
+                      buttonColor: AppColors.primary,
+                      onTap: openWhatsApp,
                     ),
-                    buttonColor: AppColors.primary,
-                    onTapButton: openWhatsApp,
                   ),
                 ),
               )
@@ -265,6 +260,7 @@ class WorkingHoursView extends StatelessWidget {
                                 Icons.calendar_today,
                                 0,
                                 isDarkMode,
+                                now.weekday == 1,
                               ),
                               const SizedBox(height: 16),
                               _buildScheduleItem(
@@ -274,6 +270,7 @@ class WorkingHoursView extends StatelessWidget {
                                 Icons.event_available,
                                 1,
                                 isDarkMode,
+                                (now.weekday >= 2 && now.weekday <= 5),
                               ),
                               const SizedBox(height: 16),
                               _buildScheduleItem(
@@ -283,6 +280,7 @@ class WorkingHoursView extends StatelessWidget {
                                 Icons.weekend,
                                 2,
                                 isDarkMode,
+                                (now.weekday == 6 || now.weekday == 7),
                               ),
                             ],
                           ),
@@ -307,14 +305,20 @@ class WorkingHoursView extends StatelessWidget {
     IconData icon,
     int index,
     bool isDarkMode,
+    bool isActive,
   ) {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: isDarkMode ? Colors.grey[850] : Colors.grey[200],
+        color: isActive
+            ? AppColors.primary.withValues(alpha: 0.15)
+            : (isDarkMode ? Colors.grey[850] : Colors.grey[200]),
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
-          color: isDarkMode ? Colors.grey.shade700 : Colors.grey.shade500,
+          color: isActive
+              ? AppColors.primary
+              : (isDarkMode ? Colors.grey.shade700 : Colors.grey.shade500),
+          width: isActive ? 2 : 1,
         ),
       ),
       child: Row(
@@ -322,10 +326,10 @@ class WorkingHoursView extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
-              color: AppColors.primary.withValues(alpha: 0.1),
+              color: isActive ? AppColors.primary : AppColors.primary.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(8),
             ),
-            child: Icon(icon, color: AppColors.primary, size: 20),
+            child: Icon(icon, color: isActive ? Colors.white : AppColors.primary, size: 20),
           ),
           const SizedBox(width: 16),
           Expanded(
@@ -334,9 +338,10 @@ class WorkingHoursView extends StatelessWidget {
               children: [
                 Text(
                   day,
-                  style: const TextStyle(
+                  style:TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
+                    color: isActive ? AppColors.primary : null,
                   ),
                 ),
                 const SizedBox(height: 4),

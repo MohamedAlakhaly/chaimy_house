@@ -1,9 +1,12 @@
 import 'dart:developer';
+import 'package:chimay_house/modules/auth/complete_profile/view/complete_profile_view.dart';
 import 'package:chimay_house/modules/auth/logic_view/view/logic_view.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:chimay_house/core/constant/app_routes.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 abstract class SignInController extends GetxController {
   void signIn();
@@ -12,13 +15,15 @@ abstract class SignInController extends GetxController {
 }
 
 class SignInControllerImp extends SignInController {
-  GlobalKey<FormState> globalKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> globalKey = GlobalKey<FormState>();
   late TextEditingController emailController;
   late TextEditingController passwordController;
   bool obscureText = true;
   bool agreePrivate = false;
   bool isLoading = false;
   IconData visibilityIcon = Icons.visibility_off_outlined;
+
+  final GoogleSignIn _googleSignIn = GoogleSignIn.instance;
 
   @override
   signIn() async {
@@ -49,6 +54,7 @@ class SignInControllerImp extends SignInController {
     }
   }
 
+
   @override
   goToSignUp() async {
     Get.offAllNamed(AppRoutes.signUp);
@@ -66,6 +72,10 @@ class SignInControllerImp extends SignInController {
   void onInit() {
     emailController = TextEditingController();
     passwordController = TextEditingController();
+    _googleSignIn.initialize(
+      serverClientId:
+          "324540492115-fblrk9lj7sln45212o47iuaq1a0rvvaj.apps.googleusercontent.com",
+    );
     super.onInit();
   }
 

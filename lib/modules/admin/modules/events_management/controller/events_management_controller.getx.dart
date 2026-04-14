@@ -207,40 +207,54 @@ class EventsManagementControllerImp extends EventsManagementController {
     }
   }
 
-  // تحديث الفعالية
+// تحديث الفعالية - النسخة النهائية الآمنة للويب
   updateEvent(String id) async {
-    if (updateGlobleKey.currentState!.validate()) {
+    if (updateGlobleKey.currentState!.validate() ?? false) {
       try {
         isLoadingForUpdate.value = true;
-        String imageUrl = oldImageUrl!;
-        Timestamp eventDate = oldEventDate!;
 
+        // 1. التعامل الآمن مع الصورة القديمة
+        // نستخدم قيمة افتراضية "" بدلاً من "!" لمنع الانهيار
+        String currentImageUrl = oldImageUrl ?? ""; 
+        
+        // 2. التعامل الآمن مع التاريخ القديم
+        // نستخدم تاريخ اللحظة كخيار احتياطي إذا كان التاريخ القديم نول
+        Timestamp currentEventDate = oldEventDate ?? Timestamp.now(); 
+
+        // 3. إذا رفع المستخدم صورة جديدة
         if (imageBytesForUpdate.value != null) {
-          final fileName =
-              'images/${DateTime.now().millisecondsSinceEpoch}.jpg';
+          final fileName = 'images/${DateTime.now().millisecondsSinceEpoch}.jpg';
           final ref = FirebaseStorage.instance.ref(fileName);
 
+          // في الويب نستخدم putData مع Uint8List
           await ref.putData(imageBytesForUpdate.value!);
-          imageUrl = await ref.getDownloadURL();
+          currentImageUrl = await ref.getDownloadURL();
         }
 
+        // 4. إذا اختار المستخدم تاريخاً جديداً من الـ Picker
         if (date2 != null) {
-          eventDate = Timestamp.fromDate(date2!);
+          currentEventDate = Timestamp.fromDate(date2!);
         }
 
+        // 5. التحديث في Firestore
         await FirebaseFirestore.instance.collection('events').doc(id).update({
           'title': lastTilteController.text,
           'description': lastDescriptionController.text,
           'location': lastLocationController.text,
-          'imageUrl': imageUrl,
-          'eventDate': eventDate,
+          'imageUrl': currentImageUrl,
+          'eventDate': currentEventDate,
         });
 
         Get.back();
         Get.snackbar('Succès', 'L\'événement a été modifié avec succès.');
+        
+        // تنظيف البيانات بعد النجاح
+        imageBytesForUpdate.value = null;
+        date2 = null;
+
       } catch (e) {
-        log(e.toString());
-        Get.snackbar('Erreur', 'Échec de la mise à jour de l\'événement.');
+        log("Detailed Update Error: $e");
+        Get.snackbar('Erreur', 'Échec de la mise à jour: $e');
       } finally {
         isLoadingForUpdate.value = false;
       }

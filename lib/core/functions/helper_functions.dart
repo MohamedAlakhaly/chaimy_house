@@ -1,3 +1,4 @@
+import 'package:chimay_house/core/services/app_services.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -18,6 +19,21 @@ class HelperFunctions {
     DateTime dateTime = timestamp.toDate();
     return DateFormat("MMMM d, y • h:mm a").format(dateTime);
   }
+
+  String formatSafeDate(Timestamp timestamp) {
+      AppServices services = Get.find();
+      DateTime dateTime = timestamp.toDate();
+
+      String rawLang =
+          services.sharedPreferences.getString('langCode') ??
+          Get.deviceLocale?.languageCode ??
+          'en';
+
+      List<String> dateSafeLocales = ['en', 'ar', 'fr', 'es', 'tr', 'nl', 'uk'];
+      String safeLocale = dateSafeLocales.contains(rawLang) ? rawLang : 'en';
+
+      return DateFormat("MMMM d, y • h:mm a", safeLocale).format(dateTime);
+    }
 
     String formatFirestoreTimestampOnlyDate(Timestamp timestamp) {
     DateTime dateTime = timestamp.toDate();

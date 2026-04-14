@@ -18,6 +18,7 @@ Map<String, String> arabic = {
   'cancelButton': 'إلغاء',
   'addReminder': 'إضافة تذكير',
   'saveButton': 'حفظ',
+  'close': 'إغلاق',
 
   //! gloabl
   'usernameValid': 'اسم المستخدم غير صالح',
@@ -80,22 +81,27 @@ Map<String, String> arabic = {
   'accountCreationFailedTitle': 'فشل التسجيل',
   'accountCreationFailedContent': 'فشل إنشاء الحساب، يرجى المحاولة لاحقاً.',
   'privacyPolicyOffTitle': 'تنبيه',
-  'privacyPolicyOffContent': 'يجب الموافقة على شروط الخدمة وسياسة الخصوصية للمتابعة.',
+  'privacyPolicyOffContent':
+      'يجب الموافقة على شروط الخدمة وسياسة الخصوصية للمتابعة.',
 
   //! verify email
   'verifyEmailAppbar': 'تأكيد البريد الإلكتروني',
-  'verifyEmailContent': 'لقد أرسلنا رابطاً لتأكيد الحساب إلى بريدك.. يرجى فحص البريد الوارد والرسائل غير المرغوب فيها للمتابعة.',
+  'verifyEmailContent':
+      'لقد أرسلنا رابطاً لتأكيد الحساب إلى بريدك.. يرجى فحص البريد الوارد والرسائل غير المرغوب فيها للمتابعة.',
   'checkYourEmailButton': 'تفقّد البريد الوارد',
   'signInButton': 'تسجيل الدخول',
   'resendEmailButton': 'لم يصلك الرمز؟ إعادة الإرسال',
   'verificationEmailSentTitle': 'تم إرسال بريد التحقق',
-  'verificationEmailSentContent': 'لقد أرسلنا رابط تحقق جديداً إلى بريدك الإلكتروني. يرجى مراجعة صندوق الوارد (والرسائل غير المرغوب فيها) لتفعيل حسابك.',
+  'verificationEmailSentContent':
+      'لقد أرسلنا رابط تحقق جديداً إلى بريدك الإلكتروني. يرجى مراجعة صندوق الوارد (والرسائل غير المرغوب فيها) لتفعيل حسابك.',
   'accessTemporarilyBlockedTitle': 'تقييد الوصول مؤقتاً',
-  'accessTemporarilyBlockedContent': 'لقد قمنا بحظر جميع الطلبات من هذا الجهاز بسبب نشاط غير معتاد. يرجى المحاولة لاحقاً لضمان أمان حسابك.',
+  'accessTemporarilyBlockedContent':
+      'لقد قمنا بحظر جميع الطلبات من هذا الجهاز بسبب نشاط غير معتاد. يرجى المحاولة لاحقاً لضمان أمان حسابك.',
 
   //! forget password
   'forgotPasswordAppbar': 'نسيت كلمة المرور؟',
-  'forgotPasswordDescription': 'لا تقلق! هذا يحدث دائماً. يرجى إدخال البريد الإلكتروني المرتبط بحسابك.',
+  'forgotPasswordDescription':
+      'لا تقلق! هذا يحدث دائماً. يرجى إدخال البريد الإلكتروني المرتبط بحسابك.',
   'enterYourEmail': 'أدخل بريدك الإلكتروني',
   'sendEmailButton': 'إرسال رابط الاستعادة',
   'RememberYourPassword': 'هل تذكرت كلمة المرور؟',
@@ -107,12 +113,33 @@ Map<String, String> arabic = {
 
   //! success send email
   'successSendEmailAppbar': 'تم إرسال البريد بنجاح!',
-  'successSendEmailDescription': 'لقد أرسلنا رابطاً لإعادة تعيين كلمة المرور إلى بريدك. يرجى اتباع التعليمات الواردة في الرسالة.',
+  'successSendEmailDescription':
+      'لقد أرسلنا رابطاً لإعادة تعيين كلمة المرور إلى بريدك. يرجى اتباع التعليمات الواردة في الرسالة.',
   'openEmailButton': 'فتح البريد الإلكتروني',
   'backToSignIn': 'العودة لتسجيل الدخول',
-  'spamMessage': 'لم تصلك الرسالة؟ تفقّد مجلد الرسائل غير المرغوب فيها أو حاول إعادة الإرسال.',
+  'spamMessage':
+      'لم تصلك الرسالة؟ تفقّد مجلد الرسائل غير المرغوب فيها أو حاول إعادة الإرسال.',
   'emailFailedToOpenMessageTitle': 'تنبيه',
-  'emailFailedToOpenMessageContent': 'يرجى فتح تطبيق البريد يدوياً لتفقّد الرسالة.',
+  'emailFailedToOpenMessageContent':
+      'يرجى فتح تطبيق البريد يدوياً لتفقّد الرسالة.',
+
+      //! complete profile
+  'completeProfileAppbar': 'إكمال الملف الشخصي',
+  'completeProfileContent': 'مرحباً بك! يرجى إدخال رقم الغرفة لإكمال عملية التسجيل.',
+  'completeProfileSuccessTitle': 'تم إكمال الملف',
+  'completeProfileSuccessContent': 'لقد تم إكمال ملفك الشخصي بنجاح.',
+  'completeProfileErrorTitle': 'خطأ',
+  'completeProfileErrorContent': 'حدث خطأ أثناء تحديث ملفك الشخصي. يرجى المحاولة مرة أخرى لاحقاً.',
+  'failedToAgreePrivacyTitle': 'خطأ',
+  'failedToAgreePrivacyContent': 'يجب الموافقة على شروط الخدمة وسياسة الخصوصية.',
+
+  //! social auth
+  'socialAuthErrorTitle': 'تسجيل الدخول بجوجل',
+  'socialAuthErrorContent': 'حدث خطأ أثناء المصادقة باستخدام جوجل. يرجى المحاولة مرة أخرى لاحقاً.',
+  'userEmailNotVerifiedTitle': 'البريد الإلكتروني غير مفعل',
+  'userEmailNotVerifiedContent': 'لم يتم التحقق من بريدك الإلكتروني، يرجى التوجه لصفحة التفعيل.',
+  'userNotFoundTitle': 'المستخدم غير موجود',
+  'userNotFoundContent': 'لم يتم العثور على بيانات المستخدم بعد المصادقة. يرجى التواصل مع الدعم أو إعادة محاولة تسجيل الدخول.',
 
   //! waiting for activation
   'waitingForActivationTitle': 'حسابك قيد المراجعة',
@@ -184,6 +211,7 @@ Map<String, String> arabic = {
   'cleaningScheduleFromDate': 'من : ',
   'cleaningScheduleToDate': 'إلى : ',
   'cleaningScheduleToDateYourRoomLable': 'غرفتك',
+  'cleaningScheduleFinishedLable': 'انتهى الوقت',
   'cleaningScheduleErrorGetDataTitle': 'حدث خطأ.',
   'cleaningScheduleErrorGetDataContent':
       'حدث خطأ أثناء جلب البيانات\n يرجى المحاولة لاحقاً.',
@@ -332,6 +360,8 @@ Map<String, String> arabic = {
       'مبنى البلدية المحلي الذي يقدم الخدمات الإدارية.',
   'importantPlacesChimayGare':
       'أقرب محطة حافلات وقطار تربط شيماي بالمناطق المجاورة.',
+
+  'distance_meter': '@distance متر بعيد عنك',
   'importantPlacesMyLocationButton': 'موقعي',
   'importantPlacesOpenInMapButton': 'فتح في الخرائط',
 
@@ -391,6 +421,9 @@ Map<String, String> arabic = {
   //! events
   'eventsAppBarTitle': 'الفعاليات',
   'readMoreButton': 'اقرأ المزيد',
+  'eventsNoEventsTitle': 'لا توجد فعاليات قادمة',
+  'eventsNoEventsContent':
+      'يبدو أن القائمة فارغة في الوقت الحالي. ترقبوا لتكونوا أول من يعرف عن أنشطتنا وفعالياتنا الجديدة!',
   'eventsDataAndTimeData': 'التاريخ والوقت',
   'eventsLocationData': 'الموقع',
   'eventsAboutThisEventData': 'حول هذه الفعالية',
@@ -429,8 +462,8 @@ Map<String, String> arabic = {
   'reminderAddedSuccessTitle': 'تم بنجاح',
   'reminderAddedSuccessContent': 'تم إضافة التذكير وجدولة التنبيه بنجاح.',
   'reminderAddError': 'فشل إضافة التذكير، يرجى المحاولة مرة أخرى.',
-  'failedToSaveReminderTitle':'خطأ',
-  'failedToSaveReminderContent':'فشل الحفظ محلياً.',
+  'failedToSaveReminderTitle': 'خطأ',
+  'failedToSaveReminderContent': 'فشل الحفظ محلياً.',
 
   "interview": "مقابلة",
   "doctor": "طبيب",
@@ -1112,7 +1145,9 @@ Map<String, String> arabic = {
   'privacyPolicyDescription': 'اقرأ سياسة الخصوصية الخاصة بنا',
 
   //! edit personal detailes
-  'editPersonalDetailesAppBarTitle': 'تعديل التفاصيل الشخصية',
+  'editPersonalDetailsAppBarTitle': 'تعديل التفاصيل الشخصية',
+    'editProfilePicture': 'تعديل الصورة',
+
   'successEditDataMessageTitle': 'نجاح',
   'successEditDataMessageContent': 'تم تحديث البيانات بنجاح.',
   'filedEditDataMessageTitle': 'خطأ',
@@ -1132,7 +1167,8 @@ Map<String, String> arabic = {
   //! About App View - Arabic
   'aboutAppAppbar': 'عن التطبيق',
   'aboutAppSectionTitle': 'نبذة عن التطبيق',
-  'aboutAppContent': 'يهدف التطبيق إلى تنظيم الحياة اليومية داخل السكن، وتسهيل التواصل بين المقيمين والإدارة، وتحسين مستوى النظام والنظافة والانضباط.',
+  'aboutAppContent':
+      'يهدف التطبيق إلى تنظيم الحياة اليومية داخل السكن، وتسهيل التواصل بين المقيمين والإدارة، وتحسين مستوى النظام والنظافة والانضباط.',
   'appGoalsTitle': 'أهداف التطبيق',
   'appGoalsFooter': 'تنظيم – تواصل – إدارة ذكية',
   'goal1': 'تنظيم المهام المشتركة مثل جدول التنظيف',
@@ -1145,9 +1181,57 @@ Map<String, String> arabic = {
   'targetGroupContent': '• المقيمون داخل السكن\n• إدارة السكن والمشرفون',
   'mainFeaturesTitle': 'أهم المميزات',
   'appVisionTitle': 'رؤية التطبيق',
-  'appVisionDescription': 'تحويل السكن المشترك إلى بيئة منظمة وذكية تعتمد على التقنية لتقليل المشاكل وتحسين جودة الحياة للمقيمين.',
+  'appVisionDescription':
+      'تحويل السكن المشترك إلى بيئة منظمة وذكية تعتمد على التقنية لتقليل المشاكل وتحسين جودة الحياة للمقيمين.',
   'appInitiativeTitle': 'مبادرة تطوير التطبيق',
-  'appInitiativeContent1': 'تم تطوير هذا التطبيق كمبادرة تقنية لتنظيم السكن وتحسين جودة الحياة للمقيمين.',
+  'appInitiativeContent1':
+      'تم تطوير هذا التطبيق كمبادرة تقنية لتنظيم السكن وتحسين جودة الحياة للمقيمين.',
   'appInitiativeContent2': 'يهدف إلى دعم الإدارة وتسهيل التواصل داخل السكن.',
   'developerCredit': 'تصميم وتطوير:\nMohamed Al-Akhali',
+
+  //? extra services
+  'eventsTitle': 'الأحداث',
+'eventsContent': 'تابع الأنشطة والاجتماعات والإعلانات داخل السكن.',
+
+'guidelinesTitle': 'الإرشادات',
+'guidelinesContent': 'تعليمات وقواعد تساعدك على العيش براحة وتجنب المشاكل.',
+
+'settingsTitle': 'الإعدادات',
+'settingsContent': 'تحكم في اللغة والثيم وخصص تجربتك داخل التطبيق بسهولة.',
+
+'profileTitle': 'الملف الشخصي',
+'profileContent': 'إدارة بياناتك مثل الاسم والصورة ورقم الغرفة.',
+
+'notificationsTitle': 'الإشعارات',
+'notificationsContent': 'استقبل التنبيهات والتذكيرات والتحديثات المهمة من الإدارة.',
+
+  //! privacy policy
+
+  'privacy_policy_title': 'سياسة الخصوصية',
+      'privacy_matters_title': 'خصوصيتك تهمنا',
+      'privacy_matters_desc': 'نحن نحترم خصوصيتك ونلتزم بحماية بياناتك الشخصية أثناء استخدام التطبيق.',
+      'data_collection_title': 'البيانات التي نقوم بجمعها',
+      'data_collection_footer': 'هذه البيانات ضرورية لتوفير تجربة مخصصة وتنظيم السكن بشكل أفضل.',
+      'name': 'الاسم',
+      //? 'email': 'البريد الإلكتروني',
+      'room_number': 'رقم الغرفة',
+      'user_image': 'صورة المستخدم (اختياري)',
+      'location': 'الموقع الجغرافي (لعرض موقعك فقط)',
+      'usage_title': 'كيف نستخدم بياناتك',
+      'usage_desc': 'نستخدم بياناتك لإدارة حسابك، تنظيم المهام داخل السكن، وتحسين تجربتك داخل التطبيق.',
+      'notifications_title': 'الإشعارات',
+      'notifications_desc': 'قد يتم إرسال إشعارات لك مثل التذكيرات أو الإعلانات الخاصة بالسكن أو الفعاليات.',
+      'storage_title': 'تخزين البيانات',
+      'storage_desc': 'يتم تخزين البيانات باستخدام خدمات Firebase بشكل آمن مثل Firestore وAuthentication وStorage.',
+      'security_title': 'حماية البيانات',
+      'security_desc': 'نحرص على حماية بياناتك وعدم مشاركتها مع أي طرف خارجي.',
+      'location_usage_title': 'الموقع الجغرافي',
+      'location_usage_desc': 'يتم استخدام موقعك فقط لعرض موقعك الحالي داخل الخريطة ولا يتم تتبعه أو تخزينه.',
+      'sharing_title': 'مشاركة البيانات',
+      'sharing_desc': 'لا يتم مشاركة بياناتك مع أي جهة خارجية، ويمكن للإدارة فقط الاطلاع عليها لتنظيم السكن.',
+      'app_nature_title': 'طبيعة التطبيق',
+      'app_nature_desc': 'هذا التطبيق هو مبادرة شخصية تهدف إلى تحسين إدارة السكن وتسهيل الحياة اليومية للمقيمين.',
+      'contact_us_title': 'التواصل',
+      'contact_us_desc': 'لأي استفسار حول الخصوصية يمكنك التواصل عبر البريد الإلكتروني:',
+      'last_update': 'آخر تحديث: 2026',
 };

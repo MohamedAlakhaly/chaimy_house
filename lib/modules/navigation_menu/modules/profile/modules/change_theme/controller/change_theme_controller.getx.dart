@@ -75,6 +75,7 @@ class ChangeThemeControllerImp extends ChangeThemeController {
 
   @override
   changToLightMode() async{
+    if(isDarkMode == false) return; 
     isDarkMode = false;
     Get.changeThemeMode(ThemeMode.light);
     switchTheme!.isActive = true;
@@ -86,6 +87,7 @@ class ChangeThemeControllerImp extends ChangeThemeController {
 
   @override
   changToDarkMode() async{
+    if(isDarkMode == true) return;
     isDarkMode = true;
     Get.changeThemeMode(ThemeMode.dark);
     switchTheme!.isActive = true;
@@ -96,6 +98,7 @@ class ChangeThemeControllerImp extends ChangeThemeController {
 
   @override
   void onInit() {
+    // currentTheme = services.sharedPreferences.getBool('lightMode') ?? false;
     switchTheme = SimpleAnimation(isDarkMode ? 'Light' : 'Dark');
     super.onInit();
   }

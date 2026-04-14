@@ -22,7 +22,6 @@ class ImportantPlacesView extends StatelessWidget {
         title: 'importantPlacesAppBarTitle'.tr,
 
         actions: [
-          
           Obx(() {
             return GestureDetector(
               onTap: controller.switchMapType,
@@ -54,7 +53,7 @@ class ImportantPlacesView extends StatelessWidget {
             if (!controller.markersLoaded.value) {
               return Center(child: CircularProgressIndicator()); // مؤقتًا
             }
-            
+
             return GoogleMap(
               mapType: controller.isNormalType.value
                   ? MapType.normal
@@ -233,7 +232,11 @@ class ImportantPlacesView extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.only(top: 6),
                       child: Text(
-                        "يبعد ${controller.calculateDistance(place)!.toStringAsFixed(0)} متر",
+                        'distance_meter'.trParams({
+                          'distance': controller
+                              .calculateDistance(place)!
+                              .toStringAsFixed(0),
+                        }),
                         style: TextStyle(color: Colors.grey, fontSize: 14),
                       ),
                     ),
@@ -307,7 +310,7 @@ class ImportantPlacesView extends StatelessWidget {
                     child: IconButton(
                       onPressed: () => controller.selectedPlace.value = null,
                       icon: Icon(Icons.close, color: Colors.grey.shade500),
-                      tooltip: 'Close',
+                      tooltip: 'close'.tr,
                     ),
                   ).animate().scale(
                     begin: const Offset(0.9, 0.9),

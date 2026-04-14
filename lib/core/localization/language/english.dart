@@ -18,6 +18,7 @@ Map<String, String> english = {
   'cancelButton': 'Cancel',
   'addReminder': 'Add Reminder',
   'saveButton': 'Save',
+  'close': 'Close',
 
   //! gloabl
   'usernameValid': 'username not valid',
@@ -58,10 +59,10 @@ Map<String, String> english = {
   'forgot password': 'Forgot your password ?',
   'or': '(or)',
   'haven\'t account': 'Don\'t have an account ?',
-  'emailNotVerifyTitle':'Error',
-  'emailNotVerifyContent':'Your Email is not verify',
-  'checkEmailOrPasswordTitle':'Error',
-  'checkEmailOrPasswordContent':'Check your email or password',
+  'emailNotVerifyTitle': 'Error',
+  'emailNotVerifyContent': 'Your Email is not verify',
+  'checkEmailOrPasswordTitle': 'Error',
+  'checkEmailOrPasswordContent': 'Check your email or password',
 
   //! sign up view
   'create new account title': 'Create your account',
@@ -74,42 +75,43 @@ Map<String, String> english = {
       'I hereby agree to the terms of services and \n privacy policy',
   'create account': 'Create account',
   'have account': 'Already have an account ?',
-  'weakPasswordTitle':'Error',
-  'weakPasswordContent':'The password provided is too weak.',
-  'emailAlreadyInUseTitle':'Warning',
-  'emailAlreadyInUseContent':'The account already exists for that email.',
-  'accountCreationFailedTitle':'Error',
-  'accountCreationFailedContent':'Account creation failed. Please try again later.',
-  'privacyPolicyOffTitle':'Warning',
-  'privacyPolicyOffContent':'You must agree to the Terms of Service and Privacy Policy.',
-
+  'weakPasswordTitle': 'Error',
+  'weakPasswordContent': 'The password provided is too weak.',
+  'emailAlreadyInUseTitle': 'Warning',
+  'emailAlreadyInUseContent': 'The account already exists for that email.',
+  'accountCreationFailedTitle': 'Error',
+  'accountCreationFailedContent':
+      'Account creation failed. Please try again later.',
+  'privacyPolicyOffTitle': 'Warning',
+  'privacyPolicyOffContent':
+      'You must agree to the Terms of Service and Privacy Policy.',
 
   //! verify email
-  'verifyEmailAppbar':'Verify Email',
-  'verifyEmailContent':'we have sent a new verification email to ... please check both your index and spam folder and continue to sign in',
-  'checkYourEmailButton':'Check your email',
-  'signInButton':'Sign In',
-  'resendEmailButton':'Didn\'t receive the code? Resend it.',
-  'verificationEmailSentTitle':'Verification Email Sent',
-  'verificationEmailSentContent':'A new verification link has been sent to your inbox. Please check your email (and spam folder) to activate your account.',
-  'accessTemporarilyBlockedTitle':'Access Temporarily Blocked',
-  'accessTemporarilyBlockedContent':'We have blocked all requests from this device due to unusual activity. Please try again later to ensure your account\'s security.',
-
+  'verifyEmailAppbar': 'Verify Email',
+  'verifyEmailContent':
+      'we have sent a new verification email to ... please check both your index and spam folder and continue to sign in',
+  'checkYourEmailButton': 'Check your email',
+  'signInButton': 'Sign In',
+  'resendEmailButton': 'Didn\'t receive the code? Resend it.',
+  'verificationEmailSentTitle': 'Verification Email Sent',
+  'verificationEmailSentContent':
+      'A new verification link has been sent to your inbox. Please check your email (and spam folder) to activate your account.',
+  'accessTemporarilyBlockedTitle': 'Access Temporarily Blocked',
+  'accessTemporarilyBlockedContent':
+      'We have blocked all requests from this device due to unusual activity. Please try again later to ensure your account\'s security.',
 
   //! forget password
   'forgotPasswordAppbar': 'Forget Password ?',
-  'forgotPasswordDescription': 'Don\'t worry! It happens. Please enter the email address associated with your account.',
-  'enterYourEmail':'Enter your email',
+  'forgotPasswordDescription':
+      'Don\'t worry! It happens. Please enter the email address associated with your account.',
+  'enterYourEmail': 'Enter your email',
   'sendEmailButton': 'Send Reset Email',
   'RememberYourPassword': 'Remember your password ? ',
   //?=> 'signInButton': 'Sign In',
-  'errorSendingLinkToChangePasswordTitle':'Error',
-  'errorSendingLinkToChangePasswordContent':'Something went wrong',
-  'problemConnectingToServerTitle':'Error',
-  'problemConnectingToServerContent':'Problem connecting to the server',
-
-
-
+  'errorSendingLinkToChangePasswordTitle': 'Error',
+  'errorSendingLinkToChangePasswordContent': 'Something went wrong',
+  'problemConnectingToServerTitle': 'Error',
+  'problemConnectingToServerContent': 'Problem connecting to the server',
 
   //! success send email
   'successSendEmailAppbar': 'Email Sent Successfully!',
@@ -117,11 +119,36 @@ Map<String, String> english = {
       'We\'ve sent a password reset link to your email address. Please check your inbox and follow the instructions to reset your password.',
   'openEmailButton': 'Check your email',
   'backToSignIn': 'Back to sign in',
-  'spamMessage':'Didn\'t receive the email? Check your spam folder or try resending.',
-  'emailFailedToOpenMessageTitle':'Warning',
-  'emailFailedToOpenMessageContent':'Please manually open the Mail app to check the message.',
+  'spamMessage':
+      'Didn\'t receive the email? Check your spam folder or try resending.',
+  'emailFailedToOpenMessageTitle': 'Warning',
+  'emailFailedToOpenMessageContent':
+      'Please manually open the Mail app to check the message.',
 
+  //! complete profile
+  'completeProfileAppbar': 'Complete Your Profile',
+  'completeProfileContent':
+      'Welcome! Please enter your room number to complete the registration process.',
+  'completeProfileSuccessTitle': 'Profile Completed',
+  'completeProfileSuccessContent':
+      'Your profile has been completed successfully.',
+  'completeProfileErrorTitle': 'Error',
+  'completeProfileErrorContent':
+      'An error occurred while updating your profile. Please try again later.',
+  'failedToAgreePrivacyTitle': 'Error',
+  'failedToAgreePrivacyContent':
+      'You must agree to the Terms of Service and Privacy Policy.',
 
+  //! social auth
+  'socialAuthErrorTitle': 'Google Sign-In',
+  'socialAuthErrorContent':
+      'An error occurred while authenticating with Google. Please try again later.',
+  'userEmailNotVerifiedTitle': 'Email Not Verified',
+  'userEmailNotVerifiedContent':
+      'User email not verified, staying/going to VerifyEmailView',
+  'userNotFoundTitle': 'User Not Found',
+  'userNotFoundContent':
+      'No user data found after authentication. Please contact support or try signing in again.',
 
   //! waiting for activation
   'waitingForActivationTitle': 'Your account is under review',
@@ -204,6 +231,7 @@ Map<String, String> english = {
   'cleaningScheduleFromDate': 'From : ',
   'cleaningScheduleToDate': 'To : ',
   'cleaningScheduleToDateYourRoomLable': 'Your Room',
+  'cleaningScheduleFinishedLable': 'Time\'s up',
   'cleaningScheduleErrorGetDataTitle': 'An error occurred.',
   'cleaningScheduleErrorGetDataContent':
       'An error occurred while fetching data\n Please try again later.',
@@ -392,6 +420,7 @@ Map<String, String> english = {
   'importantPlacesChimayGare':
       'The nearest bus and train station connecting Chimay to nearby areas.',
 
+  'distance_meter': '@distance meters away',
   'importantPlacesMyLocationButton': 'My Location',
   'importantPlacesOpenInMapButton': 'Open in Maps',
 
@@ -462,6 +491,9 @@ Map<String, String> english = {
   //! events ______________________________
   'eventsAppBarTitle': 'Events',
   'readMoreButton': 'Read more',
+  'eventsNoEventsTitle': 'No Upcoming Events',
+  'eventsNoEventsContent':
+      'It looks like the list is empty for now. Stay tuned to be the first to know about our new activities and events!',
   'eventsDataAndTimeData': 'Date & Time',
   'eventsLocationData': 'Location',
   'eventsAboutThisEventData': 'About This Event',
@@ -1324,8 +1356,9 @@ Map<String, String> english = {
   'privacyPolicyTitle': 'Privacy Policy',
   'privacyPolicyDescription': 'Read our privacy policy',
 
-  //! edit personal detailes
-  'editPersonalDetailesAppBarTitle': 'edit personal detailes',
+  //! edit personal details
+  'editPersonalDetailsAppBarTitle': 'edit personal details',
+  'editProfilePicture': 'Edit picture',
   'successEditDataMessageTitle': 'Success',
   'successEditDataMessageContent': 'The data was successfully updated.',
   'filedEditDataMessageTitle': 'Error',
@@ -1347,7 +1380,8 @@ Map<String, String> english = {
   //! About App
   'aboutAppAppbar': 'About App',
   'aboutAppSectionTitle': 'About the App',
-  'aboutAppContent': 'The app aims to organize daily life within the residence, facilitate communication between residents and management, and improve order, cleanliness, and discipline.',
+  'aboutAppContent':
+      'The app aims to organize daily life within the residence, facilitate communication between residents and management, and improve order, cleanliness, and discipline.',
   'appGoalsTitle': 'App Goals',
   'appGoalsFooter': 'Organization – Communication – Smart Management',
   'goal1': 'Organizing shared tasks like cleaning schedules',
@@ -1357,13 +1391,75 @@ Map<String, String> english = {
   'goal5': 'Providing a safe and organized living environment for everyone',
   'goal6': 'Improving quality of life within the shared residence',
   'targetGroupTitle': 'Target Group',
-  'targetGroupContent': '• Residents within the housing\n• Housing management and supervisors',
+  'targetGroupContent':
+      '• Residents within the housing\n• Housing management and supervisors',
   'mainFeaturesTitle': 'Main Features',
   'appVisionTitle': 'App Vision',
-  'appVisionDescription': 'Transforming shared housing into an organized and smart environment that relies on technology to reduce problems and improve the quality of life for residents.',
+  'appVisionDescription':
+      'Transforming shared housing into an organized and smart environment that relies on technology to reduce problems and improve the quality of life for residents.',
   'appInitiativeTitle': 'App Development Initiative',
-  'appInitiativeContent1': 'This app was developed as a technical initiative to organize housing and improve the quality of life for residents.',
-  'appInitiativeContent2': 'It aims to support management and facilitate communication within the housing.',
+  'appInitiativeContent1':
+      'This app was developed as a technical initiative to organize housing and improve the quality of life for residents.',
+  'appInitiativeContent2':
+      'It aims to support management and facilitate communication within the housing.',
   'developerCredit': 'Designed & Developed by:\nMohamed Al-Akhali',
+  //? extra services
+  'eventsTitle': 'Events',
+  'eventsContent':
+      'Stay updated with activities, meetings, and announcements inside the residence.',
+
+  'guidelinesTitle': 'Guidelines',
+  'guidelinesContent':
+      'Clear instructions and rules to help you live comfortably and avoid issues.',
+
+  'settingsTitle': 'Settings',
+  'settingsContent':
+      'Control language, theme, and personalize your app experience easily.',
+
+  'profileTitle': 'Profile',
+  'profileContent':
+      'Manage your personal information like name, photo, and room details.',
+
+  'notificationsTitle': 'Notifications',
+  'notificationsContent':
+      'Receive important alerts, reminders, and updates from the administration.',
+
+  //! privacy policy
+  'privacy_policy_title': 'Privacy Policy',
+  'privacy_matters_title': 'Your Privacy Matters',
+  'privacy_matters_desc':
+      'We respect your privacy and are committed to protecting your personal data while using the app.',
+  'data_collection_title': 'Data We Collect',
+  'data_collection_footer':
+      'This data is essential for providing a personalized experience and better housing management.',
+  'name': 'Name',
+  //? 'email': 'Email',
+  'room_number': 'Room Number',
+  'user_image': 'User Photo (Optional)',
+  'location': 'Location (For display only)',
+  'usage_title': 'How We Use Your Data',
+  'usage_desc':
+      'We use your data to manage your account, organize housing tasks, and improve your experience within the app.',
+  'notifications_title': 'Notifications',
+  'notifications_desc':
+      'You may receive notifications such as reminders or announcements regarding housing or events.',
+  'storage_title': 'Data Storage',
+  'storage_desc':
+      'Data is securely stored using Firebase services like Firestore, Authentication, and Storage.',
+  'security_title': 'Data Security',
+  'security_desc':
+      'We are committed to protecting your data and do not share it with any third party.',
+  'location_usage_title': 'Geographical Location',
+  'location_usage_desc':
+      'Your location is used only to show your current position on the map and is not tracked or stored.',
+  'sharing_title': 'Data Sharing',
+  'sharing_desc':
+      'Your data is not shared with any external parties; only management can access it for housing organization.',
+  'app_nature_title': 'App Nature',
+  'app_nature_desc':
+      'This app is a personal initiative aimed at improving housing management and facilitating daily life for residents.',
+  'contact_us_title': 'Contact Us',
+  'contact_us_desc':
+      'For any privacy-related inquiries, you can contact us via email:',
+  'last_update': 'Last Update: 2026',
 };
- 
